@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="CtlEstablecimiento" table="ctl_establecimiento">
+    <indexes>
+      <index name="IDX_332BD42C3544B551" columns="id_establecimiento_padre"/>
+      <index name="IDX_332BD42C7EAD49C7" columns="id_municipio"/>
+      <index name="IDX_332BD42C4E0E50FD" columns="id_tipo_establecimiento"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombre" type="string" column="nombre" length="150" nullable="false"/>
+    <field name="direccion" type="string" column="direccion" length="250" nullable="true"/>
+    <field name="telefono" type="string" column="telefono" length="15" nullable="true"/>
+    <field name="fax" type="string" column="fax" length="15" nullable="true"/>
+    <field name="latitud" type="decimal" column="latitud" precision="10" scale="4" nullable="true"/>
+    <field name="longitud" type="decimal" column="longitud" precision="10" scale="4" nullable="true"/>
+    <field name="idNivelMinsal" type="integer" column="id_nivel_minsal" nullable="true"/>
+    <field name="codUcsf" type="integer" column="cod_ucsf" nullable="true"/>
+    <field name="activo" type="boolean" column="activo" nullable="true"/>
+    <field name="tipoExpediente" type="string" column="tipo_expediente" nullable="true"/>
+    <field name="configurado" type="boolean" column="configurado" nullable="true"/>
+    <field name="tipoFarmacia" type="boolean" column="tipo_farmacia" nullable="true"/>
+    <many-to-one field="idTipoEstablecimiento" target-entity="CtlTipoEstablecimiento">
+      <join-columns>
+        <join-column name="id_tipo_establecimiento" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idMunicipio" target-entity="CtlMunicipio">
+      <join-columns>
+        <join-column name="id_municipio" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idEstablecimientoPadre" target-entity="CtlEstablecimiento">
+      <join-columns>
+        <join-column name="id_establecimiento_padre" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

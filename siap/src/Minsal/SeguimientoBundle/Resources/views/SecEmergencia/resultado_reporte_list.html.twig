@@ -1,0 +1,20 @@
+{%block stylesheets %}
+<link href="{{asset('bundles/minsalsiaps/js/jquery.jqGrid-4.5.2/css/ui.jqgrid.css')}}" rel="stylesheet"  type="text/css" media="all"/>
+<link href="{{asset('bundles/minsalsiaps/css/jqGrid.css')}}" rel="stylesheet"  type="text/css" media="all"/>
+{%endblock%}
+{%block javascripts %}
+<script type="text/javascript" src="{{asset('bundles/minsalsiaps/js/jquery.jqGrid-4.5.2/js/i18n/grid.locale-es.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/minsalsiaps/js/jquery.jqGrid-4.5.2/js/jquery.jqGrid.min.js')}}" ></script>
+<script src="{{ asset('bundles/minsalseguimiento/js/SecEmergencia/jqGridEmergencias.js') }}" type="text/javascript"></script>
+{%endblock%}
+<label id="lregistro"></label>
+<div id="enlaces">
+    <form id='reporteExpedientesForm' >
+        <label>Exportar a:
+            <a id="exportar_hoja_calculo" class="img_export_inf" href=""><img src={{ asset('bundles/minsalsiaps/imagenes/calc_icon.png') }} /></a>
+            <a id="exportar_pdf" class="img_export_inf" href=""><img src={{ asset('bundles/minsalsiaps/imagenes/pdf_icon.png') }} /></a>
+        </label>
+    </form>
+</div>
+<table id="tPacientesEmergencias"></table>
+<div id="pagerpacientesEmergencias"></div>

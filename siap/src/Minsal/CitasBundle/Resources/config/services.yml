@@ -1,0 +1,7 @@
+parameters:
+#    minsal_citas.example.class: Minsal\CitasBundle\Example
+
+services:
+#    minsal_citas.example:
+#        class: %minsal_citas.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

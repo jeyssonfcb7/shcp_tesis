@@ -1,0 +1,26 @@
+{% extends 'SonataAdminBundle::layout.html.twig' %}
+{% block stylesheets %}
+    {{parent()}}
+<link rel="stylesheet" href="{{ asset('bundles/minsalseguimiento/css/SecIngreso/list.css') }}" type="text/css" media="all" />  
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+<script src="{{ asset('bundles/minsalsiaps/js/datepicker/jquery.ui.datepicker-es.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/minsalsiaps/js/maskedinput/jquery.maskedinput.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/minsalseguimiento/js/SecIngreso/resumen.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/minsalsiaps/js/funciones_generales.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block sonata_admin_content -%}
+{% block notice %}
+	{% include 'SonataCoreBundle:FlashMessage:render.html.twig' %}
+{% endblock notice %}
+
+<div class="pull-right">
+    <a class="btn btn-info" href="{{ admin.generateUrl('list') }}"><span class="glyphicon glyphicon-search"></span>Buscar otro Paciente</a>
+</div>
+<h4 id="lresultado">Lista de Pacientes Ingresados el día de HOY</h4>
+<div id="resultadoBusqueda"></div>
+{% endblock %}
+

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="CitDistribucion" table="cit_distribucion">
+    <indexes>
+      <index name="fki_fos_user_user_cit_distribucion" columns="idusuarioreg"/>
+      <index name="fki_fos_user_user_mod_cit_distribucion" columns="idusuariomod"/>
+      <index name="fki_mnt_area_mod_estab_cit_distribucion" columns="id_area_mod_estab"/>
+      <index name="fki_mnt_consultorios_cit_distribucion" columns="id_consultorio"/>
+      <index name="fki_mnt_empleados_cit_distribucion" columns="id_empleado"/>
+      <index name="fki_mnt_rangohoras_cit_distribucion" columns="id_rangohora"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="idRangohora" type="integer" column="id_rangohora" nullable="true"/>
+    <field name="idEmpleado" type="integer" column="id_empleado" nullable="true"/>
+    <field name="primera" type="integer" column="primera" nullable="true"/>
+    <field name="subsecuente" type="integer" column="subsecuente" nullable="true"/>
+    <field name="mes" type="integer" column="mes" nullable="true"/>
+    <field name="yrs" type="integer" column="yrs" nullable="true"/>
+    <field name="dia" type="integer" column="dia" nullable="true"/>
+    <field name="idConsultorio" type="integer" column="id_consultorio" nullable="true"/>
+    <field name="idusuarioreg" type="integer" column="idusuarioreg" nullable="true"/>
+    <field name="fechahorareg" type="datetime" column="fechahorareg" nullable="true"/>
+    <field name="idAtenAreaModEstab" type="integer" column="id_aten_area_mod_estab" nullable="true"/>
+    <field name="idusuariomod" type="integer" column="idusuariomod" nullable="true"/>
+    <field name="fechahoramod" type="datetime" column="fechahoramod" nullable="true"/>
+    <field name="tipocon" type="string" column="tipocon" length="5" nullable="true"/>
+    <field name="idAreaModEstab" type="integer" column="id_area_mod_estab" nullable="true"/>
+    <field name="distribucionmed" type="string" column="distribucionmed" length="6" nullable="true"/>
+  </entity>
+</doctrine-mapping>

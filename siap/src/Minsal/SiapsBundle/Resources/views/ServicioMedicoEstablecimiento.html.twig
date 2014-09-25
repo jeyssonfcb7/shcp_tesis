@@ -1,0 +1,80 @@
+{% extends 'SonataAdminBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$field = $('#_id-especialidad');
+			$field.prepend('<option/>').val(function(){return $('[selected]',this).val() ;})
+
+			$field.select2({
+				placeholder: 'Seleccionar Especialidad...',
+				allowClear: true
+			});
+
+			{% if empEspecialidades %}
+				{% for especialidad in empEspecialidades%}
+					$field.append($('<option>', {value: {{ especialidad.getId() }}, text: '{{ especialidad.getNombreConsulta() }}' }));
+				{% endfor %}
+			{% endif %}
+
+			$field.on('change', function(e){
+				if(e.val) {
+
+					$('#_nombre-especialidad').val($('#_id-especialidad option:selected').text());
+				}
+			});
+
+            $(document).on('submit','form',function(e){
+
+               if($('#_id-especialidad option:selected').val() == "") {
+               		if($('div#dialog-message').length == 0) {
+                        $('body').append('<div id="dialog-message"></div>');
+                    } else {
+                        $('#dialog-message').empty();
+                    }
+
+                    $("#dialog-message").append('<p><i class="icon-warning-sign" style="margin-right:7px;"></i>\
+                                         La especialidad no ha sido seleccionada, por favor seleccione una especialidad \
+                                         antes de continuar.</p>');
+
+                    $("#dialog-message").dialog({
+                        dialogClass: "dialog-error",
+                        modal: true,
+                        title: 'Especialidad no seleccionada!!!',
+                        buttons: {
+                            Cerrar: function() {
+                                    $( this ).dialog( "close" );
+                            }
+                        }
+                    });
+
+                	e.preventDefault();
+               }
+            });
+		});
+	</script>
+{% endblock %}
+
+{% block sonata_side_nav %}
+{% endblock %}
+{% block content %}
+	<form action="{{ url('set_emp_especialidad_estab') }}" method="POST">
+		<center>
+			<label>Seleccion una especialidad: *</label><br />
+			<select id="_id-especialidad" name="_id-especialidad" style="width:300px;"></select>
+			<input type="hidden" id="_nombre-especialidad" name="_nombre-especialidad" value="" />
+			<br /><br />
+			{% if app.session.get('_secured_token') is defined and app.session.get('_secured_token') is not null %}
+				<input type="hidden" name="_provided_token" id="_provided_token" value="{{ app.session.get('_secured_token') }}" />
+				<input type="hidden" name="previous_url" id="previous_url" value="{{ previous_url }}" />
+			{% endif %}
+			<button type="submit" id="_enviar-especialida" name="_enviar-especialida" class="btn btn-primary" formaction="{{ url('set_emp_especialidad_estab') }}"><span class="label">Ingresar</span></button>
+		</center>
+	</form>
+{% endblock %}

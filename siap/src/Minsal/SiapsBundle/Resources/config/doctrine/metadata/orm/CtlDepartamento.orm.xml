@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="CtlDepartamento" table="ctl_departamento">
+    <indexes>
+      <index name="IDX_C3F1602B24308A3B" columns="id_establecimiento_region"/>
+      <index name="IDX_C3F1602BF57D32FD" columns="id_pais"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombre" type="string" column="nombre" length="150" nullable="true"/>
+    <field name="codigoCnr" type="string" column="codigo_cnr" length="5" nullable="true"/>
+    <field name="abreviatura" type="string" column="abreviatura" length="5" nullable="true"/>
+    <many-to-one field="idPais" target-entity="CtlPais">
+      <join-columns>
+        <join-column name="id_pais" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idEstablecimientoRegion" target-entity="CtlEstablecimiento">
+      <join-columns>
+        <join-column name="id_establecimiento_region" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

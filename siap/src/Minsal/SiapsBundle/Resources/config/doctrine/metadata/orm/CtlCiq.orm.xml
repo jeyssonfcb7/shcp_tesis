@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="CtlCiq" table="ctl_ciq">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="codigo" type="string" column="codigo" length="6" nullable="false"/>
+    <field name="procedimiento" type="text" column="procedimiento" nullable="false"/>
+    <field name="idTipoProcedimiento" type="integer" column="id_tipo_procedimiento" nullable="true"/>
+  </entity>
+</doctrine-mapping>

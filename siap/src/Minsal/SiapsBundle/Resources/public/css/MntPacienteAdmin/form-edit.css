@@ -1,0 +1,144 @@
+/**********  Para tablas ******************/
+.dat_paciente{
+    text-align: left;
+    border: 2px solid #E3E3E3;
+    position: relative;
+    width: 90%; 
+   background-color: #D0E6FF;
+   color:black;
+}
+
+table.dat_paciente td + td {
+    border-right: 2px solid #E3E3E3;    
+}
+
+.dat_paciente_sec td {
+    padding-left: 15px;
+    color:white;
+    background-color:  #022C5C
+}
+
+.sonata-bc .form-horizontal .control-group:before span[id$="_expedientes"] table.table-bordered {
+    text-align: center;
+    border: 2px solid black;
+    clear: both;
+    display: inline;
+}
+span[id$="_expedientes"] table.table-bordered{
+    width: 80%;
+}
+.dat_paciente label{
+    padding-left: 1em;
+    text-align: left;  
+    display: inline;
+    margin-bottom: 0;
+    width: 190px;
+    float: left;
+    padding-top:7px;
+}
+
+.dat_paciente input{
+    width: 100%;
+}
+
+.dat_paciente #persona_dio_datos,.dat_paciente #persona_responsable{
+    margin-left: 14px;
+    width: 24.5%;
+}
+
+.dat_paciente #persona_responsable{
+    margin-left: 50px;
+    width: 49%;
+}
+
+.sonata-bc .row-fluid .span5 {
+    width: 80%;
+}
+
+.sonata-bc .row-fluid textarea.span5[id$="_observacion"] {
+    width: 70%;
+}
+
+.sonata-bc .row-fluid input.span5[id$="_direccion"], .sonata-bc .row-fluid input.span5[id$="_direccionResponsable"] {
+    width: 95%;
+}
+
+.sonata-bc .dat_paciente .control-group, .sonata-bc .dat_paciente .control-group label{
+    margin-bottom: 0;
+}
+
+.sonata-bc .form-horizontal .dat_paciente .controls {
+    padding-bottom: 2px;
+    padding-top: 2px;
+}
+
+.sonata-bc .form-horizontal .dat_paciente .control-label {
+    text-align: left;
+    padding-left: 1em;
+}
+
+.sonata-bc .form-horizontal .dat_paciente select[id$='_idParentescoProporDatos']{
+    width: 35%;
+    margin-left: 4px;
+}
+
+.sonata-bc .form-horizontal .dat_paciente label[for$='_idParentescoProporDatos']{
+    width: 40%;
+}
+
+.dat_paciente_sec{
+    background-color: #B0C4DE;
+    font-weight: bold;
+    height: 2.3em;
+}
+
+.dat_paciente_content{
+    vertical-align: middle;
+    padding-bottom: 0.3em;
+}
+input[id$="_fechaNacimiento"]{
+    width : 90px;
+    margin-left:0;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+#form_paciente .ui-datepicker-trigger{ 
+    display: inline; 
+}
+select[id$="_hour"]{
+    width : 70px;
+}
+select[id$="_minute"] { 
+    width : 90px;
+}
+
+td[class$="_delete control-group"]{
+    display: none;
+}
+
+td[class$="_expedientes-idPaciente control-group"]{
+    display: none;
+}
+
+div.field-container thead th:nth-child(1){
+    display: none;
+}
+
+div.field-container thead th:nth-child(3){
+    width: 60%;
+}
+
+.sonata-ba-field.sonata-ba-field-standard-natural {
+    margin-left: 210px;
+    width: 50%;
+}
+
+.form-group {
+    margin-bottom: 5px;
+    padding-top:   10px;
+}
+
+.full-width {
+    width: 90% !important;
+}

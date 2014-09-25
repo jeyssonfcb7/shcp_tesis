@@ -1,0 +1,14 @@
+{%block stylesheets %}
+<link href="{{asset('bundles/minsalsiaps/js/jquery.jqGrid-4.5.2/css/ui.jqgrid.css')}}" rel="stylesheet"  type="text/css" media="all"/>
+<link href="{{asset('bundles/minsalsiaps/css/jqGrid.css')}}" rel="stylesheet"  type="text/css" media="all"/>
+{%endblock%}
+{%block javascripts %}
+<script type="text/javascript" src="{{asset('bundles/minsalsiaps/js/jquery.jqGrid-4.5.2/js/i18n/grid.locale-es.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/minsalsiaps/js/jquery.jqGrid-4.5.2/js/jquery.jqGrid.min.js')}}" ></script>
+<script src="{{ asset('bundles/minsalsiaps/js/MntPacienteAdmin/jqGridBusqueda.js') }}" type="text/javascript"></script>
+{%endblock%}
+<h4>Lista de Pacientes</h4>
+<label id="lregistro"></label>
+<table id="tBuscarPaciente" border="1"></table>
+<div id="pBuscarPaciente"></div>
+<input hidden="hidden" value="{{ tipo_busqueda}}" id="tipo"/>

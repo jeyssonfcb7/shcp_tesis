@@ -1,0 +1,64 @@
+/*
+ * src/Minsal/SiapsBundle/Resources/public/css/MntExpediente/list.css
+ * 
+ */
+.sonata-bc .sonata-ba-list-field-header {
+    font-size: 10pt;
+    background-color: #F0F8FF;
+}
+
+.table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
+    border: 2px solid #E5EDF5;
+}
+
+.sonata-bc .table th, .sonata-bc .table td {
+    border-top: 2px solid #E5EDF5 !important;
+}
+
+#expedientes_creados{
+    width: 60%;
+    alignment-adjust: central;
+}
+.sonata-bc form {
+    margin: auto;
+}
+#titulo_parametro{
+    text-align: center;
+    height: 20px;
+}
+.sonata-bc .fecha {width:95px;}
+
+.fecha.form-control {
+    display: inherit;
+}
+
+div #resultadoBusqueda{padding-bottom: 25px;}
+
+.sonata-bc .table td{
+    padding:3px;
+    height:15px;
+    text-align:left; 
+    line-height: 20px;
+    vertical-align: middle;
+    border-top:1px solid #dddddd;
+}
+.table-bordered input:hover {background-color: #F0F8FF;}
+
+.sonata-bc input[type="text"]{
+    margin: 4px;
+    vertical-align: middle;
+}
+
+/*para que desplegue la imagen del calendario en linea con el input */
+.sonata-bc img {
+    display: inline;
+}
+
+#lregistro{
+    text-align: left;
+    margin: 0 auto;
+}
+
+#resultado{
+     overflow: auto;
+}

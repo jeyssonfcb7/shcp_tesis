@@ -1,0 +1,49 @@
+/*
+ * src/Minsal/Seguimiento/Resources/public/css/SecIngreso/reporte_list.css
+ * 
+ */
+.sonata-bc .table {
+    margin-bottom: 20px;
+    width: 50%;
+    border-top: 2px solid #E5EDF5 !important;
+}
+.sonata-bc .sonata-ba-list-field-header {
+    background-color: #F0F8FF;
+}
+
+.table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
+    border: 2px solid #E5EDF5;
+}
+
+.sonata-bc input[type="text"]{
+    margin: 4px;
+    vertical-align: middle;
+}
+.sonata-bc .nombresLargos {width:300px;}
+.sonata-bc .nombres {width:135px;}
+.sonata-bc .table td{
+    padding:3px;
+    height:15px;
+    text-align:left; 
+    line-height: 20px;
+    vertical-align: middle;
+    border-top:1px solid #dddddd;
+}
+.table-bordered input:hover {background-color: #F0F8FF;}
+.sonata-bc .fecha {width:85px;}
+.sonata-bc .nombresLargos {width:300px;}
+/*para que desplegue la imagen del calendario en linea con el input */
+.sonata-bc img {
+    display: inline;
+    
+}
+#resultadoBusqueda{
+    overflow: auto;
+    alignment-adjust: central;
+    width: 100%;
+}
+
+h4{
+  text-align:center;
+  font-weight: bold;
+}

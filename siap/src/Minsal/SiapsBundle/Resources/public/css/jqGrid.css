@@ -1,0 +1,45 @@
+.ui-jqgrid {
+    margin: 0 auto; 
+    border: 1px solid #979797;
+    font-size: 12pt;
+}
+.ui-widget-header {
+    background:#B0C4DE;
+    border: 1px solid #979797;
+    font-size: 10pt;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background:#d6d2d0;
+    border: 1px solid #c0c0c0;
+    font-size: 0.9em;
+}
+.ui-jqgrid .ui-jqgrid-pager {
+    font-size: 10pt;
+}
+
+.ui-jqgrid .ui-paging-info {
+    font-weight: bold;
+    font-size: 10pt;
+    color: #2d2d2d;
+}
+
+.ui-jqgrid .ui-jqgrid-view {
+    font-size: 12pt;
+}
+.ui-jqgrid tr.jqgrow td {
+    font-size: 0.8em;
+}
+
+.ui-jqgrid .ui-pg-selbox {
+    font-size: 1em;
+}
+#enlaces{
+    text-align: right;
+    padding-right: 2em;
+}
+#enlaces label{
+    font-weight: bold;
+}
+.img_export_inf{
+    
+}

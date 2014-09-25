@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobante_citas" language="groovy" printOrder="Horizontal" pageWidth="612" pageHeight="792" columnWidth="584" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="1b9cb22e-6b50-49ab-ba37-6f84fc4fddf4">
+	<property name="ireport.zoom" value="1.210000000000005"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1" uuid="7bf88c8f-664d-409b-a37d-46c6dd28d813"/>
+	<parameter name="id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT t02.nombre AS nom_establecimiento,
+       t05.nombre AS nom_departamento,
+       t06.numero AS num_expediente,
+       TO_CHAR(t01.fecha, 'FMDD "de" TMMONTH "de" YYYY')AS fecha_cita,
+       t11.hora_ini || ' ' || t11.meridianoini AS hora_cita,
+       COALESCE(t07.primer_nombre, '') || ' ' || COALESCE(t07.segundo_nombre, '') || ' ' ||
+       COALESCE(t07.tercer_nombre, '') || ' ' || COALESCE(t07.primer_apellido, '') || ' ' ||
+       COALESCE(t07.segundo_nombre, '') AS nom_paciente,
+       COALESCE(t08.nombreempleado) AS nom_medico,
+       COALESCE(t13.descripcion, 'N/A') AS num_consultorio,
+       t10.nombre AS nom_especialidad,
+       t14.nom_usuarioreg
+FROM cit_citas_dia t01
+INNER JOIN ctl_establecimiento      t02 ON (t02.id = t01.id_establecimiento)
+INNER JOIN ctl_tipo_establecimiento t03 ON (t03.id = t02.id_tipo_establecimiento)
+INNER JOIN ctl_municipio            t04 ON (t04.id = t02.id_municipio)
+INNER JOIN ctl_departamento         t05 ON (t05.id = t04.id_departamento)
+INNER JOIN mnt_expediente           t06 ON (t06.id = t01.id_expediente)
+INNER JOIN mnt_paciente             t07 ON (t07.id = t06.id_paciente)
+INNER JOIN mnt_empleado             t08 ON (t08.id = t01.id_empleado)
+INNER JOIN mnt_aten_area_mod_estab  t09 ON (t09.id = t01.id_aten_area_mod_estab)
+INNER JOIN ctl_atencion             t10 ON (t10.id = t09.id_atencion)
+INNER JOIN mnt_rangohora         t11 ON (t11.id = t01.id_rangohora)
+INNER JOIN cit_distribucion         t12 ON (t12.id_rangohora       = t01.id_rangohora
+                          AND t12.id_empleado            = t01.id_empleado
+                          AND t12.id_aten_area_mod_estab = t01.id_aten_area_mod_estab)
+LEFT OUTER JOIN mnt_consultorio          t13 ON (t13.id = t12.id_consultorio)
+INNER JOIN (
+        SELECT ti01.id,
+              ti01.username AS nom_usuarioreg
+        FROM fos_user_user ti01
+        --INNER JOIN mnt_empleado ti02 ON (ti02.id = ti01.id_empleado)
+           ) t14 ON (t14.id = t01.idusuarioreg)
+WHERE t01.id = $P{id}]]>
+	</queryString>
+	<field name="nom_establecimiento" class="java.lang.String"/>
+	<field name="nom_departamento" class="java.lang.String"/>
+	<field name="num_expediente" class="java.lang.String"/>
+	<field name="fecha_cita" class="java.lang.String"/>
+	<field name="hora_cita" class="java.lang.String"/>
+	<field name="nom_paciente" class="java.lang.String"/>
+	<field name="nom_medico" class="java.lang.String"/>
+	<field name="num_consultorio" class="java.lang.String"/>
+	<field name="nom_especialidad" class="java.lang.String"/>
+	<field name="nom_usuarioreg" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="24" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="584" height="24" uuid="4140ef31-5b05-4b42-b548-051faa07ebd0"/>
+				<box>
+					<pen lineColor="#848484"/>
+					<topPen lineWidth="1.5" lineColor="#A4A4A4"/>
+					<leftPen lineWidth="1.5" lineColor="#A4A4A4"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed" lineColor="#848484"/>
+					<rightPen lineWidth="1.5" lineColor="#A4A4A4"/>
+				</box>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="154" height="24" uuid="50a212b2-b155-40de-93f7-fceba929728b"/>
+					<box>
+						<rightPen lineWidth="1.5" lineColor="#A4A4A4"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ministerio de Salud]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="154" y="0" width="430" height="12" uuid="4ca0744c-410a-47ad-bb97-c40e6bc63e6b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nom_establecimiento}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="154" y="12" width="430" height="12" uuid="8f0818ff-f2a2-402f-91dc-e34e4142d142"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nom_departamento}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="137" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="584" height="124" uuid="59343cd4-ecc7-4fac-9dff-d618f35e0209"/>
+				<box>
+					<leftPen lineWidth="1.5" lineColor="#A4A4A4"/>
+					<bottomPen lineWidth="1.5" lineColor="#A4A4A4"/>
+					<rightPen lineWidth="1.5" lineColor="#A4A4A4"/>
+				</box>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="584" height="17" uuid="f026c775-0bb3-4677-95c5-5f8644ffc2de"/>
+					<box topPadding="0" rightPadding="0">
+						<topPen lineWidth="1.5" lineStyle="Solid" lineColor="#A4A4A4"/>
+						<bottomPen lineWidth="1.5" lineStyle="Solid" lineColor="#A4A4A4"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Comprobante de Control de Cita Medica]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="119" y="17" width="173" height="17" uuid="418bfbab-a485-4d72-96e1-a4bee79b2ff5"/>
+					<box leftPadding="7" rightPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{num_expediente}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="17" width="119" height="17" uuid="4847a8e7-a61b-4300-bbaf-1441c3fd5d98"/>
+					<box leftPadding="7" rightPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Número de Expediente:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="34" width="119" height="17" uuid="6e9d50bc-1a2a-4bd2-9570-3cb53ea51614"/>
+					<box leftPadding="7" rightPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Fecha de la Consulta:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="292" y="34" width="119" height="17" uuid="b712bb68-5d03-4531-b9cd-bd21678005b9"/>
+					<box leftPadding="7" rightPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Hora de la Consulta]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="119" y="34" width="173" height="17" uuid="377c37fa-feab-4496-b096-2210286577c1"/>
+					<box leftPadding="7" rightPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fecha_cita}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="411" y="34" width="173" height="17" uuid="a5cea69c-fca6-40cd-8b7b-79d1abcfa73a"/>
+					<box leftPadding="7" rightPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{hora_cita}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="292" y="51" width="119" height="17" uuid="5e815e20-d5eb-4184-8059-5adc719e1ae0"/>
+					<box leftPadding="7" rightPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Nombre del Médico:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="51" width="119" height="17" uuid="aa7bbffe-bc86-439f-8956-11a3ef8c68ca"/>
+					<box leftPadding="7" rightPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Nombre del Paciente:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="68" width="119" height="17" uuid="ab4072f4-746a-4f9f-80ab-745f7475a370"/>
+					<box leftPadding="7" rightPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Número de Consultorio:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="292" y="68" width="119" height="17" uuid="7e148751-782b-42cb-834a-ecf604dd3748"/>
+					<box leftPadding="7" rightPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Especialidad:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="119" y="51" width="173" height="17" uuid="8fc6099a-0d53-4820-b75b-5d211775694b"/>
+					<box leftPadding="7" rightPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nom_paciente}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="411" y="51" width="173" height="17" uuid="e0b13089-d07d-4eed-9a79-bd66d1557f06"/>
+					<box leftPadding="7" rightPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nom_medico}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="119" y="68" width="173" height="17" uuid="60f157ca-a76d-4eb2-989d-807c938c783d"/>
+					<box leftPadding="7" rightPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{num_consultorio}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="411" y="68" width="173" height="17" uuid="76fed16d-5ae8-4a20-b649-5eff4e2dd20e"/>
+					<box leftPadding="7" rightPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nom_especialidad}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="0" y="85" width="584" height="39" uuid="8050ca1f-fcee-42f3-9e33-0581bea49c64"/>
+					<box topPadding="5" leftPadding="7" bottomPadding="5" rightPadding="5">
+						<topPen lineWidth="1.5" lineColor="#A4A4A4"/>
+					</box>
+					<textElement>
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Instrucciones:
+    1.- Debe presentar este comprobante para su cita.
+    2.- Acuda en la fecha y hora indicada, de lo contrario la perderá y debera solicitar una nueva cita.]]></text>
+				</staticText>
+			</frame>
+			<staticText>
+				<reportElement x="0" y="124" width="93" height="13" forecolor="#848484" uuid="0a52bb15-d64a-4abd-b724-75cf0a4e7146"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#A4A4A4"/>
+					<rightPen lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuario de Cita:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="93" y="124" width="375" height="13" forecolor="#848484" uuid="4ad21bed-24cb-45b8-9482-c0e47fa9ccfd"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#A4A4A4"/>
+					<rightPen lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nom_usuarioreg}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h:mm:ss a">
+				<reportElement x="468" y="124" width="116" height="13" forecolor="#848484" uuid="93f6c4ca-896b-4422-a1c7-65c0fb814ed9"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#A4A4A4"/>
+					<rightPen lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+</jasperReport>

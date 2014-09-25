@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="CtlCie10" table="ctl_cie10">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="codigo" type="string" column="codigo" length="5" nullable="false"/>
+    <field name="codigoGrupo" type="integer" column="codigo_grupo" nullable="false"/>
+    <field name="grupoM" type="integer" column="grupo_m" nullable="false"/>
+    <field name="diagnostico" type="string" column="diagnostico" length="130" nullable="false"/>
+    <field name="alarma" type="integer" column="alarma" nullable="true"/>
+    <field name="sexo" type="integer" column="sexo" nullable="true"/>
+    <field name="salida" type="integer" column="salida" nullable="true"/>
+    <field name="mayor" type="integer" column="mayor" nullable="true"/>
+    <field name="menor" type="integer" column="menor" nullable="true"/>
+    <field name="critico" type="integer" column="critico" nullable="true"/>
+  </entity>
+</doctrine-mapping>

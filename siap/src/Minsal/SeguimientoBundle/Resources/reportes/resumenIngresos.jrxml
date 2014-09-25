@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="resumenIngresos" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4849e951-95ca-49ad-87e0-c35b0585b150">
+	<property name="ireport.zoom" value="1.331000000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_servicio" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha_inicio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[28-03-2014]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha_fin" class="java.lang.String">
+		<defaultValueExpression><![CDATA[24-03-2014]]></defaultValueExpression>
+	</parameter>
+	<parameter name="bandera" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{id_servicio} !=0 ? "AND E.id_ambiente_ingreso="+$P{id_servicio}:""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT initcap(
+A.primer_apellido||coalesce(' '||A.segundo_apellido,'')||coalesce(' '||A.apellido_casada,'')||', '||
+A.primer_nombre||coalesce(' '||A.segundo_nombre,'')||coalesce(' '||A.tercer_nombre,'')) as nombre_paciente,
+E.id id_ingreso,
+B.numero,
+D.nombre_ambiente ambiente,
+E.diagnostico,
+to_char(E.fecha,'DD-MM-YYYY')||' '||to_char(E.hora,'HH24:MI') as fecha_ingreso,
+F.nombre establecimiento,
+to_char(A.fecha_nacimiento,'DD-MM-YYYY') as fecha_nacimiento
+FROM mnt_paciente A
+     INNER JOIN mnt_expediente B ON B.id_paciente=A.id
+     INNER JOIN sec_ingreso E ON E.id_expediente=B.id
+     LEFT JOIN mnt_aten_area_mod_estab D ON E.id_ambiente_ingreso=D.id
+     INNER JOIN ctl_establecimiento F ON F.id=B.id_establecimiento
+WHERE  B.habilitado= TRUE AND E.fecha>=to_date($P{fecha_inicio},'DD-MM-YYYY')
+AND E.fecha<=to_date($P{fecha_fin},'DD-MM-YYYY') $P!{bandera}
+ORDER BY A.primer_Apellido ASC, E.fecha DESC]]>
+	</queryString>
+	<field name="nombre_paciente" class="java.lang.String"/>
+	<field name="id_ingreso" class="java.lang.Integer"/>
+	<field name="numero" class="java.lang.String"/>
+	<field name="ambiente" class="java.lang.String"/>
+	<field name="diagnostico" class="java.lang.String"/>
+	<field name="fecha_ingreso" class="java.lang.String"/>
+	<field name="establecimiento" class="java.lang.String"/>
+	<field name="fecha_nacimiento" class="java.lang.String">
+		<fieldDescription><![CDATA[Fecha de nacimiento del paciente]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="121" splitType="Stretch">
+			<staticText>
+				<reportElement x="332" y="96" width="38" height="20" uuid="41d481c8-56d4-47a5-8fbe-7ec4a5df494c"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hasta: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="173" y="21" width="225" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="136f707f-ac98-45c9-9a57-a6a21c5f6b7e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Sistema Nacional de Salud]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="127" y="96" width="46" height="20" uuid="b37a5d11-f1f2-4bd1-88d7-67f782a6153c"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desde:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="173" y="41" width="225" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="abd08fca-1da9-40a7-969f-4ce5d9b55fa8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="11" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Listado de Pacientes Ingresados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="173" y="1" width="225" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="ee057968-9785-4e29-bbcd-08234a56fc03"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="13" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[República de El Salvador]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="173" y="96" width="100" height="20" uuid="58b76723-fb2d-498a-8046-14f007cf14eb"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{fecha_inicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="96" width="100" height="20" uuid="2b919079-864f-4bb5-84b1-d4dd9ed3f7e3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{fecha_fin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="61" width="572" height="20" uuid="83ddd18f-dfa3-4a0d-b73e-fee97b74cce0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{establecimiento}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame" isUsingCache="false" onErrorType="Blank">
+				<reportElement x="452" y="5" width="76" height="56" uuid="45638ae9-9269-4567-abf9-9317a0b7d6ce"/>
+				<imageExpression><![CDATA["repo:/reports/siaps/Reporte_Salud"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="37" y="0" width="62" height="58" uuid="aa4a5bc4-debc-4afb-a3c2-76aad35c5cc5"/>
+				<imageExpression><![CDATA["repo:/reports/siaps/Reporte_Escudo"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="1" width="71" height="32" uuid="766a566a-c75a-4bdf-9208-f1eeee2c6bb6"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NEC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="1" width="151" height="32" uuid="1bcc04ed-71e0-4e08-b7de-7ee1356fea28"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre del Paciente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="1" width="100" height="32" uuid="70478d7e-0b5a-4249-b347-0fcfcf57f0e9"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Diagnóstico Presuntivo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="1" width="100" height="32" uuid="aa76d1e0-097e-424d-8ada-51f7e16d917d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Ingreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="222" y="1" width="67" height="32" uuid="a6a75066-be90-4517-b57b-dd9b7a86efec"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[F.NAC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="389" y="1" width="81" height="32" uuid="049942c0-ca0f-4911-99da-5f2615fbe31d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Servicio]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="71" height="20" uuid="32e07c8e-0d5a-454d-ab16-101624544b4a"/>
+				<box leftPadding="4" rightPadding="4">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="71" y="0" width="151" height="20" uuid="45d84d3e-0123-4170-9397-507344fefcae"/>
+				<box leftPadding="4" rightPadding="4">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_paciente}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="470" y="0" width="100" height="20" uuid="6929bf75-7307-4765-a2e4-1ddb9e85b3cd"/>
+				<box leftPadding="4" rightPadding="4">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{diagnostico}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="222" y="0" width="67" height="20" uuid="96c97ec8-db28-4907-9cd0-423a23badbfe"/>
+				<box leftPadding="4" rightPadding="4">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fecha_nacimiento}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="289" y="0" width="100" height="20" uuid="7de88f75-1870-441a-b011-9536529bc540"/>
+				<box leftPadding="4" rightPadding="4">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fecha_ingreso}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="389" y="0" width="81" height="20" uuid="0507f21a-e23f-4950-b6cb-c36cdcda917a"/>
+				<box leftPadding="4" rightPadding="4">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ambiente}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="452" y="0" width="80" height="20" uuid="f7e7e9ff-5f0e-4b5a-abc1-44315c47d418"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" De"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="532" y="0" width="40" height="20" uuid="a3cc6d05-8dc3-4585-b02b-cc06aab0f3de"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

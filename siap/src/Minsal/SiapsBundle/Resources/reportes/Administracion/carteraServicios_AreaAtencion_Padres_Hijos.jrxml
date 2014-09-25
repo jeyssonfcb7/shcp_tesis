@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carteraServicios_AreaAtencion_Padres_Hijos" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="186efca4-93f9-4ed0-88b4-37c3996362ce">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idPadre" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[2]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT C.nombre
+FROM 
+  mnt_aten_area_mod_estab A, 
+  mnt_area_mod_estab B,
+  ctl_atencion C  
+WHERE 
+  A.id_area_mod_estab = B.id AND
+  C.id = A.id_atencion AND C.id_atencion_padre=$P{idPadre};]]>
+	</queryString>
+	<field name="nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="22d6f05d-749d-47d2-976d-502a98f19cae" x="61" y="0" width="351" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="538dabde-58b7-42b8-b7bf-f9c2ad6f1abe" x="45" y="0" width="16" height="20"/>
+				<textElement/>
+				<text><![CDATA[- ]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

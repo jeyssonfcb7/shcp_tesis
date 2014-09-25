@@ -1,0 +1,20 @@
+{% extends "ApplicationCoreBundle:Reports:standardHtmlReports.html.twig" %}
+
+{% block title %}Comprobante de Cita{% endblock %}
+{% block javascript %}
+    {{ parent() }}
+    <!--script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $iframe = $('iframe#content-iframe');
+
+            $iframe.load(function() {
+                  this.contentWindow.print();
+            });
+        });
+    </script-->
+{% endblock%}
+{% block iframe %}
+    <center>
+        <iframe id="content-iframe" name="content-iframe" src="{{ url('citasbuildcomprobante', { 'id': id }) }}" scrolling="no"></iframe>
+    </center>
+{% endblock %}

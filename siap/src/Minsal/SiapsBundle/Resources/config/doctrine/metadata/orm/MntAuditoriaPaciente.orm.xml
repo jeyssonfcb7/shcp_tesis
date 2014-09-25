@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="MntAuditoriaPaciente" table="mnt_auditoria_paciente">
+    <indexes>
+      <index name="IDX_7C1E98CF7F1FADD6" columns="area_geografica_domicilio"/>
+      <index name="IDX_7C1E98CFB490DCBC" columns="id_canton_domicilio"/>
+      <index name="IDX_7C1E98CFF4BEBFC8" columns="id_departamento_domicilio"/>
+      <index name="IDX_7C1E98CF7DFA12F6" columns="id_establecimiento"/>
+      <index name="IDX_7C1E98CFB3457663" columns="id_municipio_domicilio"/>
+      <index name="IDX_7C1E98CFA7194A90" columns="id_sexo"/>
+      <index name="IDX_7C1E98CF6B3CA4B" columns="id_user"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="idPaciente" type="bigint" column="id_paciente" nullable="false"/>
+    <field name="primerNombre" type="string" column="primer_nombre" length="25" nullable="true"/>
+    <field name="segundoNombre" type="string" column="segundo_nombre" length="25" nullable="true"/>
+    <field name="tercerNombre" type="string" column="tercer_nombre" length="25" nullable="true"/>
+    <field name="primerApellido" type="string" column="primer_apellido" length="25" nullable="true"/>
+    <field name="segundoApellido" type="string" column="segundo_apellido" length="25" nullable="true"/>
+    <field name="apellidoCasada" type="string" column="apellido_casada" length="25" nullable="true"/>
+    <field name="fechaNacimiento" type="date" column="fecha_nacimiento" nullable="true"/>
+    <field name="horaNacimiento" type="time" column="hora_nacimiento" nullable="true"/>
+    <field name="direccion" type="string" column="direccion" length="100" nullable="true"/>
+    <field name="nombrePadre" type="string" column="nombre_padre" length="80" nullable="true"/>
+    <field name="nombreMadre" type="string" column="nombre_madre" length="80" nullable="true"/>
+    <field name="nombreResponsable" type="string" column="nombre_responsable" length="80" nullable="true"/>
+    <field name="observacion" type="text" column="observacion" nullable="true"/>
+    <field name="conocidoPor" type="string" column="conocido_por" length="20" nullable="true"/>
+    <field name="fechaModificacion" type="date" column="fecha_modificacion" nullable="false"/>
+    <many-to-one field="idSexo" target-entity="CtlSexo">
+      <join-columns>
+        <join-column name="id_sexo" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idUser" target-entity="FosUserUser">
+      <join-columns>
+        <join-column name="id_user" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idMunicipioDomicilio" target-entity="CtlMunicipio">
+      <join-columns>
+        <join-column name="id_municipio_domicilio" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idEstablecimiento" target-entity="CtlEstablecimiento">
+      <join-columns>
+        <join-column name="id_establecimiento" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idCantonDomicilio" target-entity="CtlCanton">
+      <join-columns>
+        <join-column name="id_canton_domicilio" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idDepartamentoDomicilio" target-entity="CtlDepartamento">
+      <join-columns>
+        <join-column name="id_departamento_domicilio" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="areaGeograficaDomicilio" target-entity="CtlAreaGeografica">
+      <join-columns>
+        <join-column name="area_geografica_domicilio" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

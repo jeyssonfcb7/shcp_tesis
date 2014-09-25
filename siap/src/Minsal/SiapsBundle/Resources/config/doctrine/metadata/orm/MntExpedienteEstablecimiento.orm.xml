@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="MntExpedienteEstablecimiento" table="mnt_expediente_establecimiento">
+    <indexes>
+      <index name="IDX_8715ED227DFA12F6" columns="id_establecimiento"/>
+    </indexes>
+    <id name="id" type="bigint" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="idPacienteInicial" type="bigint" column="id_paciente_inicial" nullable="true"/>
+    <field name="idPacienteSiapLocal" type="bigint" column="id_paciente_siap_local" nullable="true"/>
+    <field name="idNumeroExpediente" type="bigint" column="id_numero_expediente" nullable="true"/>
+    <many-to-one field="idEstablecimiento" target-entity="CtlEstablecimiento">
+      <join-columns>
+        <join-column name="id_establecimiento" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

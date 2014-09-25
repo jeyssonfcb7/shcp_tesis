@@ -1,0 +1,53 @@
+<legend>Generación de los servicios de hospitalización</legend>
+{% if porSexo == 'true' %}
+    {% if numeroAmbientes > 0 %}
+      {% for i in range(1, 2, 1) %}
+            {% if i==1 %}
+                {% for j in range(1, numeroAmbientes, 1) %}
+                    <div class="form-group">
+                        <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                            <input type="text" style="width: 400px" class="fomr-control" name="{{ j }}_muj_nombre" value="{{especialidades.nombre}} Mujeres {{j}}"/>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                {% for j in 1..numeroAmbientes %}
+                    <div class="form-group">
+                        <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                            <input type="text" style="width: 400px" class="fomr-control" name="{{ j }}_hom_nombre" value="{{especialidades.nombre}} Hombres {{j}}" />
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% else %} 
+        <div class="form-group">
+            <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                <input type="text" style="width: 400px" class="fomr-control" name="muj_nombre" value="{{especialidades.nombre}} Mujeres"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                <input type="text" style="width: 400px" class="fomr-control" name="hom_nombre" value="{{especialidades.nombre}} Hombres" />
+            </div>
+        </div>
+     {% endif %}
+{% else %}  
+    {% if numeroAmbientes > 0 %}
+        {% for j in range(1, numeroAmbientes, 1) %}
+            <div class="form-group">
+                <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                    <input type="text" class="fomr-control" name="{{ j }}_nombre" value="{{especialidades.nombre}} {{j}}"/>
+                </div>
+            </div>
+         {% endfor %}
+    {% else %} 
+        <div class="form-group">
+            <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                <input type="text" class="fomr-control" name="nombre" value="{{especialidades.nombre}}"/>
+            </div>
+        </div>
+    {% endif %}    
+{% endif %}
+<input type="submit" class="btn btn-success" name="btn_create_and_list" value="{{ 'btn_create_and_return_to_list'|trans({}, 'SonataAdminBundle') }}"/>
+<input class="btn btn-success" type="submit" name="btn_create_and_create" value="{{ 'btn_create_and_create_a_new_one'|trans({}, 'SonataAdminBundle') }}"/>

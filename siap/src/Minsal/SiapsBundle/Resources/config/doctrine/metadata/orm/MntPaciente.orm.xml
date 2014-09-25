@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="MntPaciente" table="mnt_paciente">
+    <indexes>
+      <index name="IDX_3E2ACBC5220BCD31" columns="id_area_cotizacion"/>
+      <index name="IDX_3E2ACBC57F1FADD6" columns="area_geografica_domicilio"/>
+      <index name="IDX_3E2ACBC5B490DCBC" columns="id_canton_domicilio"/>
+      <index name="IDX_3E2ACBC5F4BEBFC8" columns="id_departamento_domicilio"/>
+      <index name="IDX_3E2ACBC5BB55CDF5" columns="id_departamento_nacimiento"/>
+      <index name="IDX_3E2ACBC5468B95CB" columns="id_doc_ide_paciente"/>
+      <index name="IDX_3E2ACBC5558DDFB5" columns="id_doc_ide_proporciono_datos"/>
+      <index name="IDX_3E2ACBC5ACA54FF3" columns="id_doc_ide_responsable"/>
+      <index name="IDX_3E2ACBC5D7E358F6" columns="id_estado_civil"/>
+      <index name="IDX_3E2ACBC5B3457663" columns="id_municipio_domicilio"/>
+      <index name="IDX_3E2ACBC5FA164C5C" columns="id_municipio_nacimiento"/>
+      <index name="IDX_3E2ACBC5B0DC2AB1" columns="id_nacionalidad"/>
+      <index name="IDX_3E2ACBC58C587E61" columns="id_ocupacion"/>
+      <index name="IDX_3E2ACBC5242CF91E" columns="id_pais_nacimiento"/>
+      <index name="IDX_3E2ACBC526DA8252" columns="id_parentesco_propor_datos"/>
+      <index name="IDX_3E2ACBC5FC412399" columns="id_parentesco_responsable"/>
+      <index name="IDX_3E2ACBC5A7194A90" columns="id_sexo"/>
+      <index name="IDX_3E2ACBC56B3CA4B" columns="id_user"/>
+      <index name="IDX_3E2ACBC5AC39DE56" columns="id_user_mod"/>
+    </indexes>
+    <id name="id" type="bigint" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="primerNombre" type="string" column="primer_nombre" length="25" nullable="false"/>
+    <field name="segundoNombre" type="string" column="segundo_nombre" length="25" nullable="true"/>
+    <field name="tercerNombre" type="string" column="tercer_nombre" length="25" nullable="true"/>
+    <field name="primerApellido" type="string" column="primer_apellido" length="25" nullable="false"/>
+    <field name="segundoApellido" type="string" column="segundo_apellido" length="25" nullable="true"/>
+    <field name="apellidoCasada" type="string" column="apellido_casada" length="25" nullable="true"/>
+    <field name="fechaNacimiento" type="date" column="fecha_nacimiento" nullable="false"/>
+    <field name="horaNacimiento" type="time" column="hora_nacimiento" nullable="true"/>
+    <field name="numeroDocIdePaciente" type="string" column="numero_doc_ide_paciente" length="20" nullable="true"/>
+    <field name="direccion" type="string" column="direccion" length="100" nullable="false"/>
+    <field name="telefonoCasa" type="string" column="telefono_casa" length="10" nullable="true"/>
+    <field name="lugarTrabajo" type="string" column="lugar_trabajo" length="50" nullable="true"/>
+    <field name="telefonoTrabajo" type="string" column="telefono_trabajo" length="10" nullable="true"/>
+    <field name="asegurado" type="boolean" column="asegurado" nullable="true"/>
+    <field name="numeroAfiliacion" type="string" column="numero_afiliacion" length="12" nullable="true"/>
+    <field name="cotizante" type="boolean" column="cotizante" nullable="true"/>
+    <field name="nombrePadre" type="string" column="nombre_padre" length="80" nullable="true"/>
+    <field name="nombreMadre" type="string" column="nombre_madre" length="80" nullable="true"/>
+    <field name="nombreConyuge" type="string" column="nombre_conyuge" length="80" nullable="true"/>
+    <field name="nombreResponsable" type="string" column="nombre_responsable" length="80" nullable="true"/>
+    <field name="direccionResponsable" type="string" column="direccion_responsable" length="100" nullable="true"/>
+    <field name="telefonoResponsable" type="string" column="telefono_responsable" length="10" nullable="true"/>
+    <field name="numeroDocIdeResponsable" type="string" column="numero_doc_ide_responsable" length="20" nullable="true"/>
+    <field name="nombreProporcionoDatos" type="string" column="nombre_proporciono_datos" length="80" nullable="true"/>
+    <field name="numeroDocIdeProporDatos" type="string" column="numero_doc_ide_propor_datos" length="20" nullable="true"/>
+    <field name="observacion" type="text" column="observacion" nullable="true"/>
+    <field name="conocidoPor" type="string" column="conocido_por" length="20" nullable="true"/>
+    <field name="idSiff" type="integer" column="id_siff" nullable="true"/>
+    <field name="estado" type="integer" column="estado" nullable="false"/>
+    <field name="dispensarizacionIndividual" type="integer" column="dispensarizacion_individual" nullable="true"/>
+    <field name="idPacienteInicial" type="bigint" column="id_paciente_inicial" nullable="true"/>
+    <field name="fechaRegistro" type="datetime" column="fecha_registro" nullable="true"/>
+    <field name="fechaMod" type="datetime" column="fecha_mod" nullable="true"/>
+    <many-to-one field="idPaisNacimiento" target-entity="CtlPais">
+      <join-columns>
+        <join-column name="id_pais_nacimiento" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idOcupacion" target-entity="CtlOcupacion">
+      <join-columns>
+        <join-column name="id_ocupacion" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idNacionalidad" target-entity="CtlNacionalidad">
+      <join-columns>
+        <join-column name="id_nacionalidad" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idParentescoProporDatos" target-entity="CtlParentesco">
+      <join-columns>
+        <join-column name="id_parentesco_propor_datos" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idParentescoResponsable" target-entity="CtlParentesco">
+      <join-columns>
+        <join-column name="id_parentesco_responsable" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idUserMod" target-entity="FosUserUser">
+      <join-columns>
+        <join-column name="id_user_mod" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idUser" target-entity="FosUserUser">
+      <join-columns>
+        <join-column name="id_user" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idSexo" target-entity="CtlSexo">
+      <join-columns>
+        <join-column name="id_sexo" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idMunicipioNacimiento" target-entity="CtlMunicipio">
+      <join-columns>
+        <join-column name="id_municipio_nacimiento" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idMunicipioDomicilio" target-entity="CtlMunicipio">
+      <join-columns>
+        <join-column name="id_municipio_domicilio" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idDepartamentoDomicilio" target-entity="CtlDepartamento">
+      <join-columns>
+        <join-column name="id_departamento_domicilio" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idCantonDomicilio" target-entity="CtlCanton">
+      <join-columns>
+        <join-column name="id_canton_domicilio" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="areaGeograficaDomicilio" target-entity="CtlAreaGeografica">
+      <join-columns>
+        <join-column name="area_geografica_domicilio" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idDepartamentoNacimiento" target-entity="CtlDepartamento">
+      <join-columns>
+        <join-column name="id_departamento_nacimiento" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idDocePaciente" target-entity="CtlDocumentoIdentidad">
+      <join-columns>
+        <join-column name="id_doc_ide_paciente" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idEstadoCivil" target-entity="CtlEstadoCivil">
+      <join-columns>
+        <join-column name="id_estado_civil" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idDoceResponsable" target-entity="CtlDocumentoIdentidad">
+      <join-columns>
+        <join-column name="id_doc_ide_responsable" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idDoceProporcionoDatos" target-entity="CtlDocumentoIdentidad">
+      <join-columns>
+        <join-column name="id_doc_ide_proporciono_datos" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idAreaCotizacion" target-entity="CtlAreaCotizante">
+      <join-columns>
+        <join-column name="id_area_cotizacion" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,129 @@
+{% extends base_template %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('bundles/applicationcore/css/corelogin.css') }}" type="text/css" media="all" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('body').append('</div>');
+
+            $('#_digitalSignature').on('change', function() {
+                var file = this.files[0];
+                var name = file.name;
+                var size = file.size;
+                var type = file.type;
+
+                if(type !== 'application/x-pkcs12') {
+                    $(this).val('');
+                    $('#fileInfo').val('');
+                    if($('div#dialog-message').length == 0) {
+                        $('body').append('<div id="dialog-message"></div>');
+                    } else {
+                        $('#dialog-message').empty();
+                    }
+
+                    $("#dialog-message").append('<p><i class="icon-warning-sign" style="margin-right:7px;"></i>\
+                                         El archivo seleccionado no es un archivo de tipo <b>Firma digital</b> cuya extensi&oacute;n debe ser <b>.p12</b>,\
+                                         <br />Por favor seleccione un nuevo archivo.</p>');
+
+                    $("#dialog-message").dialog({
+                        dialogClass: "dialog-warning",
+                        modal: true,
+                        title: 'Tipo de archivo incorrecto!!!',
+                        buttons: {
+                            Cerrar: function() {
+                                    $( this ).dialog( "close" );
+                            }
+                        }
+                    });
+                } else {
+                    $('#fileInfo').val($(this).val().replace("C:\\fakepath\\", ""));
+                }
+            });
+
+            {% if module is defined %}
+                var url = window.location;
+                //truco para añadir a la url el modulo seleccionado en la primera pagina de login
+                if(window.location.href.indexOf('_moduleSelection') == -1) {
+                    window.history.replaceState("object or string", "Title", "?{{ module }}");
+                }
+            {% endif %}
+        });
+    </script>
+{% endblock %}
+
+{% block sonata_nav %}
+{% endblock sonata_nav %}
+
+{% block sonata_header %}
+    <div id="wrapper">
+        <header class="header">
+            {% block logo %}
+                <center><img class="banner" src="{{ asset('bundles/applicationcore/images/banner.png') }}" alt="Ministerio de Salud banner" /></center>
+            {% endblock logo %}
+        </header>
+{% endblock sonata_header %}
+
+{% block sonata_left_side %}
+{% endblock sonata_left_side %}
+
+{% block body_attributes %}class="sonata-bc bg-black"{% endblock %}
+
+{% block sonata_wrapper %}
+prueba
+    <div class="form-box" id="login-box">
+        <div class="header">{# 'title_user_authentication'|trans({}, 'SonataUserBundle') #}</div>
+        {% block sonata_user_login_form %}
+            <form action="{{ path("sonata_user_admin_security_check") }}" method="post" role="form" enctype="multipart/form-data">
+                <div class="body bg-gray">
+                    {% block sonata_user_login_error %}
+                        {% if error %}
+                            <div class="alert alert-danger alert-error">{{ error|trans({}, 'FOSUserBundle')|raw }}</div>
+                        {% endif %}
+                    {% endblock %}
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+                    <input type="hidden" name="_moduleSelection" value="{{ module|slice(-1,1) }}" />
+                    <div class="form-group control-group">
+                        {% if module|slice(-1,1) != '3' and module|slice(-1,1) != '4' and module|slice(-1,1) != '6' %}
+                            <label for="username" style="text-align:left;">Nombre de Usuario</label>
+                            <input type="text" class="form-control" id="username"  name="_username" value="{{ last_username }}" required="required" placeholder="{{ 'security.login.username'|trans({}, 'SonataUserBundle') }}"/>
+                        {% else %}
+                            <label for="digtalSignature" style="text-align:left;">Firma digital</label>
+                            <div class="custom_file_upload form-control">
+                                <input type="text" id="fileInfo" class="file_info" placeholder="Seleccionar firma digital" name="_username" readonly />
+                                <div class="file_upload">
+                                    <input type="file" id="_digitalSignature" name="_digitalSignature" />
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+
+
+                    <div class="form-group control-group">
+                        <label>Contrase&ntilde;a</label>
+                        <input type="password" class="form-control" id="password" name="_password" required="required" placeholder="{{ 'security.login.password'|trans({}, 'SonataUserBundle') }}"/>
+                    </div>
+
+                    <!--<div class="form-group">
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
+                        {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+                    </div>-->
+
+                </div>
+
+                <div class="footer">
+                    <center><button type="submit" id="_submit" name="_submit" class="btn btn-primary btn-block">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button></center>
+                    <!--<p><a href="{{ path('fos_user_resetting_request') }}" class="text-center">{{ 'forgotten_password'|trans({}, 'SonataUserBundle') }}</a></p>-->
+                </div>
+            </form>
+        {% endblock %}
+    </div>
+    <div class="page-footer"><img class="dtic-footer" src="{{ asset("bundles/applicationcore/images/dtic.png") }}" alt="dtic"/>Direcci&oacute;n de Tecnolog&iacute;as de Informaci&oacute;n y Comunicaciones - Ministerio de Salud</div>
+{% endblock sonata_wrapper %}

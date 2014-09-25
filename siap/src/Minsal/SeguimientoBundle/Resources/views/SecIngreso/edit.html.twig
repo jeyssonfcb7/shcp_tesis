@@ -1,0 +1,279 @@
+{# src/Minsal/SeguimientoBundle/Resource/views/SecIngreso/edit.html.twig #}
+{% extends 'SonataAdminBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{parent()}}
+    <link rel="stylesheet" href="{{ asset('bundles/minsalseguimiento/css/SecIngreso/edit.css') }}" type="text/css" media="all" />  
+{% endblock %}
+
+{%block javascripts %}
+    {{parent()}}
+    <script src="{{ asset('bundles/minsalsiaps/js/datepicker/jquery.ui.datepicker-es.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/minsalsiaps/js/maskedinput/jquery.maskedinput.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/minsalseguimiento/js/SecIngreso/edit.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/minsalsiaps/js/funciones_generales.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+
+
+{% block form %}
+    {{ sonata_block_render_event('sonata.admin.edit.form.top', { 'admin': admin, 'object': object }) }}
+
+    {% set url = admin.id(object) is not null ? 'edit' : 'create' %}
+
+    {% if not admin.hasRoute(url)%}
+        <div>
+            {{ "form_not_available"|trans({}, "SonataAdminBundle") }}
+        </div>
+    {% else %}
+        {% include 'MinsalSiapsBundle:MntPacienteAdmin:identificacion_paciente.html.twig' %}
+
+        {% if admin.hasroute('list') and admin.isGranted('LIST')%}
+            <a style="position:relative;float:right;margin-bottom:20px;" class="btn btn-info" href="{{ path('admin_minsal_siaps_mntpaciente_list') }}">
+                <span class="glyphicon glyphicon-list"></span> Buscar Otro Paciente
+            </a>
+        {% endif %}
+
+        <input id="sexo" type="hidden" value="{{ datos.getIdSexo().getId() }}"/>
+        <input id="embarazo" type="hidden" value="{{ embarazo }}"/>
+
+        <form
+            id="form_ingreso"
+            {% if admin_pool.getOption('form_type') == 'horizontal' %}class="form-horizontal"{% endif %}
+            role="form"
+            action="{{ admin.generateUrl(url, {'id_paciente':datos.getId,'id': admin.id(object), 'uniqid': admin.uniqid, 'subclass': app.request.get('subclass')}) }}" {{ form_enctype(form) }}
+            method="POST"
+            {% if not admin_pool.getOption('html5_validate') %}novalidate="novalidate"{% endif %}
+            >
+
+            {% block sonata_pre_fieldsets %}
+                <div class="row">
+                {% endblock %}
+
+                {% block sonata_tab_content %}
+                    {% for name, form_group in admin.formgroups %}
+                        <div class="{{ form_group.class|default('col-md-12') }}">
+                            <div class="box box-success">
+                                <div class="box-header">
+                                    <h4 class="box-title">
+                                        {# admin.trans(name, {}, form_group.translation_domain) #}
+                                    </h4>
+                                    <br />
+
+                                    {% block notice %}
+                                        {% include 'SonataCoreBundle:FlashMessage:render.html.twig' %}
+                                    {% endblock notice %}
+                                    {% if form.vars.errors|length > 0 %}
+                                        <div class="alert alert-danger alert-dismissable">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                            {{ form_errors(form) }}
+                                        </div>
+                                    {% endif %}    
+                                </div>
+                                {#<div class="box{% if loop.first %} in{% endif %}" id="{{ admin.uniqid }}_{{ loop.index }}">#}
+                                <div class="box-body">
+                                    <div class="sonata-ba-collapsed-fields">
+                                        {% if form_group.description != false %}
+                                            <p>{{ form_group.description|raw }}</p>
+                                        {% endif %}
+                                        <center>
+                                            <table class="dat_ingreso">
+                                                <tr class="dat_ingreso_sec">
+                                                    <td colspan="4">EN CASO DE REFERENCIA</td>
+                                                </tr>
+                                                <tr class="dat_ingreso_content">
+                                                    <td width='50%' colspan="4">{{form_row(form[form_group.fields.idEstablecimientoReferencia])}}</td>
+                                                </tr>
+                                                <tr class="dat_ingreso_content">
+                                                    <td width='50%' colspan="4">{{form_row(form[form_group.fields.motivoReferencia])}}</td>
+                                                </tr>
+                                                <!-- BLOQUE DE INGRESO -->
+                                                <tr class="dat_ingreso_sec">
+                                                    <td colspan="4">DATOS DE INGRESO</td>
+                                                </tr>
+                                                <tr class="dat_ingreso_content">
+                                                    <td width='50%'>{{form_row(form[form_group.fields.idProcedenciaIngreso])}}</td>
+                                                    <td >{{form_row(form[form_group.fields.idCircunstanciaIngreso])}}</td>
+                                                </tr>
+                                                <tr class="dat_ingreso_content">
+                                                    <td width='50%'>{{form_row(form[form_group.fields.fecha])}}</td>
+                                                    <td >{{form_row(form[form_group.fields.hora])}}</td>
+                                                </tr>
+                                                <tr class="dat_ingreso_content">
+                                                    <td width='50%'>{{form_row(form[form_group.fields.idAtenAreaModEstab])}}</td>
+                                                    <td >{{form_row(form[form_group.fields.idAmbienteIngreso])}}</td>
+                                                </tr>
+                                                <tr class="dat_ingreso_content">
+                                                    <td width='50%'>{{form_row(form[form_group.fields.embarazada])}}</td>
+                                                    <td ></td>
+                                                </tr>
+                                                <tr class="dat_ingreso_content">
+                                                    <td width='50%'>{{form_row(form[form_group.fields.semanasAmenorrea])}}</td>
+                                                    <td >{{form_row(form[form_group.fields.fechaProbableParto])}}</td>
+                                                </tr>
+                                                <tr class="dat_ingreso_content">
+                                                    <td width='50%' colspan=4>{{form_row(form[form_group.fields.diagnostico])}}</td>
+
+                                                </tr>
+                                                <tr class="dat_ingreso_content">
+                                                    <td width='50%'>{{form_row(form[form_group.fields.idTipoAccidente])}}</td>
+                                                    <td >{{form_row(form[form_group.fields.idEmpleado])}}</td>
+                                                </tr>
+                                                <tr class="dat_ingreso_content">
+                                                    <td width='50%'>{{form_row(form[form_group.fields.tarjetasEntregadas])}}</td>
+                                                    <td >{{form_row(form[form_group.fields.responsableTarjeta])}}</td>
+                                                </tr>
+                                                <tr class="dat_ingreso_content">
+                                                    <td width='50%'><div class="control-group">
+                                                            <label class=" control-label">Responsable de elaborar el ingreso en ESDOMED:</label>
+                                                            <div class="controls sonata-ba-field sonata-ba-field-standard-natural ">
+                                                                <strong>{{ app.user.firstname ~  app.user.lastname}}</strong>
+                                                            </div>
+                                                    </td>
+                                                    <td >
+                                                        <div class="control-group">
+                                                            <label class=" control-label"> Fecha y hora de elaboración: </label>
+                                                            <div class="controls sonata-ba-field sonata-ba-field-standard-natural ">
+                                                                <strong>{{ "now"|date("d-M-Y H:i") }}</strong>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </center>
+                                    </div>
+                                </div>
+                                {#</div>#}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endblock %}
+
+                {% block sonata_post_fieldsets %}
+                </div>
+            {% endblock %}
+
+            {{ form_rest(form) }}
+
+            {% block formactions %}
+                <div class="well well-small form-actions">
+                    <input type="submit" class="btn btn-primary" name="btn_create_and_list" value="Guardar"/>
+                </div>
+            {% endblock formactions %}
+        </form>
+    {% endif %}
+{% endblock %}
+
+{# block form %}
+    {% set url = admin.id(object) ? 'edit' : 'create' %}
+
+    {% if not admin.hasRoute(url)%}
+<div>
+            {{ "form_not_available"|trans({}, "SonataAdminBundle") }}
+    </div>
+    {% else %}
+    {% include 'MinsalSiapsBundle:MntPacienteAdmin:identificacion_paciente.html.twig' %}
+
+    <a style="position:relative;left:385px" 
+       class="btn sonata-action-element" href="{{ path('admin_minsal_siaps_mntpaciente_list') }}">
+        <i class="icon-list"></i>
+        Buscar Otro Paciente</a>
+
+    <input id="sexo" type="hidden" value="{{ datos.getIdSexo().getId() }}"/>
+    <input id="embarazo" type="hidden" value="{{ embarazo }}"/>
+    <form id="form_ingreso" class="form-horizontal" action="{{ admin.generateUrl(url, {'id_paciente':datos.getId,'id': admin.id(object), 'uniqid': admin.uniqid, 'subclass': app.request.get('subclass')}) }}" {{ form_enctype(form) }} method="POST">
+            {% if form.vars.errors|length > 0 %}
+            <div class="sonata-ba-form-error">
+                    {{ form_errors(form) }}
+                </div>
+            {% endif %}
+                <div class="tab-content">
+
+                    {% for name, form_group in admin.formgroups %}
+                    <div class="tab-pane {% if loop.first %} active{% endif %}" id="{{ admin.uniqid }}_{{ name|sonata_slugify }}">
+                        <fieldset>
+                            <div class="sonata-ba-collapsed-fields">
+                                    {% if form_group.description != false %}
+                                    <p>{{ form_group.description|raw }}</p>
+                                    {% endif %}
+
+                                    <table class="dat_ingreso" border="0">
+                                        <!-- BLOQUE DE REFERERENCIA -->
+                                        <tr class="dat_ingreso_sec">
+                                            <td colspan="4">EN CASO DE REFERENCIA</td>
+                                        </tr>
+                                        <tr class="dat_ingreso_content">
+                                            <td width='50%' colspan="4">{{form_row(form[form_group.fields.idEstablecimientoReferencia])}}</td>
+                                        </tr>
+                                        <tr class="dat_ingreso_content">
+                                            <td width='50%' colspan="4">{{form_row(form[form_group.fields.motivoReferencia])}}</td>
+                                        </tr>
+                                        <!-- BLOQUE DE INGRESO -->
+                                        <tr class="dat_ingreso_sec">
+                                            <td colspan="4">DATOS DE INGRESO</td>
+                                        </tr>
+                                        <tr class="dat_ingreso_content">
+                                            <td width='50%'>{{form_row(form[form_group.fields.idProcedenciaIngreso])}}</td>
+                                            <td >{{form_row(form[form_group.fields.idCircunstanciaIngreso])}}</td>
+                                        </tr>
+                                        <tr class="dat_ingreso_content">
+                                            <td width='50%'>{{form_row(form[form_group.fields.fecha])}}</td>
+                                            <td >{{form_row(form[form_group.fields.hora])}}</td>
+                                        </tr>
+                                        <tr class="dat_ingreso_content">
+                                            <td width='50%'>{{form_row(form[form_group.fields.idAtenAreaModEstab])}}</td>
+                                            <td >{{form_row(form[form_group.fields.idAmbienteIngreso])}}</td>
+                                        </tr>
+                                        <tr class="dat_ingreso_content">
+                                            <td width='50%'>{{form_row(form[form_group.fields.embarazada])}}</td>
+                                            <td ></td>
+                                        </tr>
+                                        <tr class="dat_ingreso_content">
+                                            <td width='50%'>{{form_row(form[form_group.fields.semanasAmenorrea])}}</td>
+                                            <td >{{form_row(form[form_group.fields.fechaProbableParto])}}</td>
+                                        </tr>
+                                        <tr class="dat_ingreso_content">
+                                            <td width='50%' colspan=4>{{form_row(form[form_group.fields.diagnostico])}}</td>
+
+                                        </tr>
+                                        <tr class="dat_ingreso_content">
+                                            <td width='50%'>{{form_row(form[form_group.fields.idTipoAccidente])}}</td>
+                                            <td >{{form_row(form[form_group.fields.idEmpleado])}}</td>
+                                        </tr>
+                                        <tr class="dat_ingreso_content">
+                                            <td width='50%'><div class="control-group">
+                                                    <label class=" control-label">Responsable de elaborar el ingreso en ESDOMED:</label>
+                                                    <div class="controls sonata-ba-field sonata-ba-field-standard-natural "><strong>
+                                                            {{ app.user.firstname ~  app.user.lastname}}
+                                                                </strong></div>
+                                                        </div></td>
+                                                    <td ><div class="control-group">
+                                                            <label class=" control-label"> Fecha y hora de elaboración: </label>
+                                                            <div class="controls sonata-ba-field sonata-ba-field-standard-natural "><strong>
+                                                            {{ "now"|date("d-M-Y H:i") }}
+                                                                        </strong></div>
+                                                                </div></td>
+                                                        </tr>
+
+                                                    </table>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                    {% endfor %}
+                                    </div>
+
+            {% block sonata_post_fieldsets %}
+                                </div>
+            {% endblock %}
+
+               {{ form_rest(form) }}
+
+            {% block formactions %}
+                <div class="well form-actions">
+                    <input type="submit" class="btn btn-primary" name="btn_create_and_list" value="Guardar"/>
+                </div>
+            {% endblock formactions %}
+                            </form>
+    {% endif%}
+
+{% endblock #}

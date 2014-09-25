@@ -1,0 +1,389 @@
+{# src/Minsal/SiapsBundle/Resource/view/MntPacienteAdmin/edit.html.twig 
+   Vista para la creación y actualización de un paciente 
+#}
+{% extends 'SonataAdminBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{parent()}}
+    <link rel="stylesheet" href="{{ asset('bundles/minsalsiaps/css/MntPacienteAdmin/form-edit.css') }}" type="text/css" media="all" />  
+{% endblock %}
+
+{%block javascripts %}
+    {{parent()}}
+    <script src="{{ asset('bundles/minsalsiaps/js/datepicker/jquery.ui.datepicker-es.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/minsalsiaps/js/maskedinput/jquery.maskedinput.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/minsalsiaps/js/MntPacienteAdmin/MntPaciente_edit.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/minsalsiaps/js/funciones_generales.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block form %}
+    {{ sonata_block_render_event('sonata.admin.edit.form.top', { 'admin': admin, 'object': object }) }}
+
+    {% set url = admin.id(object) is not null ? 'edit' : 'create' %}
+
+    {% if not admin.hasRoute(url)%}
+        <div>
+            {{ "form_not_available"|trans({}, "SonataAdminBundle") }}
+        </div>
+    {% else %}
+        <form id="form_paciente"
+              {% if admin_pool.getOption('form_type') == 'horizontal' %}class="form-horizontal"{% endif %}
+              role="form"
+              action="{{ admin.generateUrl(url, {'id': admin.id(object), 'uniqid': admin.uniqid, 'subclass': app.request.get('subclass')}) }}" {{ form_enctype(form) }}
+              method="POST"
+              {% if not admin_pool.getOption('html5_validate') %}novalidate="novalidate"{% endif %}
+              >
+
+            {% if form.vars.errors|length > 0 %}
+                <div class="sonata-ba-form-error">
+                    {{ form_errors(form) }}
+                </div>
+            {% endif %}
+
+            {% if admin.hasroute('list') and admin.isGranted('LIST')%}
+                <a style="position:relative;float:right;margin-bottom:20px;" class="btn btn-info" href="{{ admin.generateUrl('list') }}">
+                    <span class="glyphicon glyphicon-list"></span>
+                    {{ 'link_action_list'|trans({}, 'SonataAdminBundle') }}
+                </a>
+            {% endif %}
+
+            {% block sonata_pre_fieldsets %}
+                <div class="row">
+                {% endblock %}
+
+                {% block sonata_tab_content %}
+                    {% for name, form_group in admin.formgroups %}
+                        <div class="{{ form_group.class|default('col-md-12') }}">
+                            <div class="box box-success">
+                                <div class="box-header">
+                                    <h4 class="box-title">
+                                        {# admin.trans(name, {}, form_group.translation_domain) #}
+                                    </h4>
+                                </div>
+                                {#<div class="box{% if loop.first %} in{% endif %}" id="{{ admin.uniqid }}_{{ loop.index }}">#}
+                                <div class="box-body">
+                                    <div class="sonata-ba-collapsed-fields">
+                                        {% if form_group.description != false %}
+                                            <p>{{ form_group.description|raw }}</p>
+                                        {% endif %}
+                                        <center>
+                                            <table class="dat_paciente">
+                                                <tr class="dat_paciente_sec">
+                                                    <td colspan="4">A.Nombre del Paciente</td>
+                                                </tr>
+                                                <tr class="dat_paciente_content">
+                                                    <td width='50%'>{{form_row(form[form_group.fields.primerApellido])}}</td>
+                                                    <td width=''>{{form_row(form[form_group.fields.segundoApellido])}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.primerNombre])}}</td>
+                                                    <td>{{form_row(form[form_group.fields.segundoNombre])}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.tercerNombre])}}</td>
+                                                    <td>{{form_row(form[form_group.fields.apellidoCasada])}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.conocidoPor])}}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr class="dat_paciente_sec">
+                                                    <td colspan="4">B.Datos del Nacimiento</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.fechaNacimiento])}}</td>
+                                                    <td>{{form_row(form[form_group.fields.horaNacimiento])}}
+                                                     {% if form_errors(form[form_group.fields.horaNacimiento])|length > 0 %}
+							<div class="sonata-ba-form-error">
+							      {{form_errors(form[form_group.fields.horaNacimiento])}}
+							</div>
+						    {% endif %}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label>Edad:</label>
+                                                        <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                                                            <input id="edad" type="text" maxlength="25" class="form-control">
+                                                        </div>
+                                                    </td>
+                                                    <td>{{form_row(form[form_group.fields.idSexo])}}
+                                                    {% if form_errors(form[form_group.fields.idSexo])|length > 0 %}
+							<div class="sonata-ba-form-error">
+							      {{form_errors(form[form_group.fields.idSexo])}}
+							</div>
+						    {% endif %}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.idPaisNacimiento])}}
+                                                     {% if form_errors(form[form_group.fields.idPaisNacimiento])|length > 0 %}
+							<div class="sonata-ba-form-error">
+							      {{form_errors(form[form_group.fields.idPaisNacimiento])}}
+							</div>
+						    {% endif %}
+                                                    </td>
+                                                    <td>{{form_row(form[form_group.fields.idDepartamentoNacimiento])}}
+							 {% if form_errors(form[form_group.fields.idDepartamentoNacimiento])|length > 0 %}
+							<div class="sonata-ba-form-error">
+							      {{form_errors(form[form_group.fields.idDepartamentoNacimiento])}}
+							</div>
+						    {% endif %}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.idMunicipioNacimiento])}}
+						       {% if form_errors(form[form_group.fields.idMunicipioNacimiento])|length > 0 %}
+							<div class="sonata-ba-form-error">
+							      {{form_errors(form[form_group.fields.idMunicipioNacimiento])}}
+							</div>
+						    {% endif %}						      
+                                                    </td>
+                                                    <td>{{form_row(form[form_group.fields.idNacionalidad])}}
+							{% if form_errors(form[form_group.fields.idNacionalidad])|length > 0 %}
+							<div class="sonata-ba-form-error">
+							      {{form_errors(form[form_group.fields.idNacionalidad])}}
+							</div>
+						    {% endif %}	
+                                                    </td>
+                                                </tr>
+                                                <tr class="dat_paciente_sec">
+                                                    <td colspan="4">C.Datos de Identificación</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.idDocPaciente])}}
+						      {% if form_errors(form[form_group.fields.idDocPaciente])|length > 0 %}
+							<div class="sonata-ba-form-error">
+							      {{form_errors(form[form_group.fields.idDocPaciente])}}
+							</div>
+						      {% endif %}
+                                                    </td>
+                                                    <td>{{form_row(form[form_group.fields.numeroDocIdePaciente])}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.idEstadoCivil])}}
+							 {% if form_errors(form[form_group.fields.idEstadoCivil])|length > 0 %}
+							<div class="sonata-ba-form-error">
+							      {{form_errors(form[form_group.fields.idEstadoCivil])}}
+							</div>
+						      {% endif %}
+                                                    </td>
+                                                    <td>{{form_row(form[form_group.fields.idOcupacion])}}
+							{% if form_errors(form[form_group.fields.idOcupacion])|length > 0 %}
+							<div class="sonata-ba-form-error">
+							      {{form_errors(form[form_group.fields.idOcupacion])}}
+							</div>
+						      {% endif %}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4">{{form_row(form[form_group.fields.direccion])}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div id="sonata-ba-field-container-numeroAmbientes" class="control-group">
+                                                            <label class=" control-label">País Domicilio:</label>
+                                                            <div class="controls sonata-ba-field sonata-ba-field-standard-natural ">
+                                                                <select id="idPaisDomicilio" name="idPaisDomicilio">
+                                                                </select></td>
+                                                            </div>
+                                                        </div>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.idDepartamentoDomicilio])}}
+                                                       {% if form_errors(form[form_group.fields.idDepartamentoDomicilio])|length > 0 %}
+							<div class="sonata-ba-form-error">
+							      {{form_errors(form[form_group.fields.idDepartamentoDomicilio])}}
+							</div>
+						      {% endif %}                                                    
+                                                    </td>
+                                                    <td>{{form_row(form[form_group.fields.idMunicipioDomicilio])}}
+                                                    {% if form_errors(form[form_group.fields.idMunicipioDomicilio])|length > 0 %}
+							<div class="sonata-ba-form-error">
+							      {{form_errors(form[form_group.fields.idMunicipioDomicilio])}}
+							</div>
+						    {% endif %}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.areaGeograficaDomicilio])}}
+						      {% if form_errors(form[form_group.fields.areaGeograficaDomicilio])|length > 0 %}
+							<div class="sonata-ba-form-error">
+							      {{form_errors(form[form_group.fields.areaGeograficaDomicilio])}}
+							</div>
+						    {% endif %}
+                                                    </td>
+                                                    <td>{{form_row(form[form_group.fields.idCantonDomicilio])}}
+                                                    {% if form_errors(form[form_group.fields.idCantonDomicilio])|length > 0 %}
+							<div class="sonata-ba-form-error">
+							      {{form_errors(form[form_group.fields.idCantonDomicilio])}}
+							</div>
+						    {% endif %}                                                    
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.telefonoCasa])}}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr class="dat_paciente_sec">
+                                                    <td colspan="4">D.Datos Laborales</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.asegurado])}}</td>
+                                                    <td>{{form_row(form[form_group.fields.idAreaCotizacion])}}
+						      {% if form_errors(form[form_group.fields.idAreaCotizacion])|length > 0 %}
+							<div class="sonata-ba-form-error">
+							      {{form_errors(form[form_group.fields.idAreaCotizacion])}}
+							</div>
+						    {% endif %}   
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.cotizante])}}</td>
+                                                    <td>{{form_row(form[form_group.fields.numeroAfiliacion])}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.lugarTrabajo])}}</td>
+                                                    <td>{{form_row(form[form_group.fields.telefonoTrabajo])}}</td>
+                                                </tr>
+                                                <tr class="dat_paciente_sec">
+                                                    <td colspan="4">E.Datos Familiares</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.nombrePadre])}}</td>
+                                                    <td>{{form_row(form[form_group.fields.nombreMadre])}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td >{{form_row(form[form_group.fields.nombreConyuge])}}</td><td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.idParentescoResponsable])}}
+						      {% if form_errors(form[form_group.fields.idParentescoResponsable])|length > 0 %}
+							<div class="sonata-ba-form-error">
+							      {{form_errors(form[form_group.fields.idParentescoResponsable])}}
+							</div>
+						    {% endif %}   
+                                                    </td>
+                                                    <td>{{form_row(form[form_group.fields.nombreResponsable])}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.telefonoResponsable])}}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.idDocResponsable])}}
+						      {% if form_errors(form[form_group.fields.idDocResponsable])|length > 0 %}
+							<div class="sonata-ba-form-error">
+							      {{form_errors(form[form_group.fields.idDocResponsable])}}
+							</div>
+						    {% endif %}   
+                                                    </td>
+                                                    <td>{{form_row(form[form_group.fields.numeroDocIdeResponsable])}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4">{{form_row(form[form_group.fields.direccionResponsable])}}</td>
+                                                </tr>
+                                                <tr class="dat_paciente_sec">
+                                                    <td colspan="4">F.Persona que Proporcionó Datos</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4">
+                                                        {{form_row(form[form_group.fields.idParentescoProporDatos])}}
+                                                         {% if form_errors(form[form_group.fields.idParentescoProporDatos])|length > 0 %}
+							<div class="sonata-ba-form-error">
+							      {{form_errors(form[form_group.fields.idParentescoProporDatos])}}
+							</div>
+						    {% endif %} 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td >{{form_row(form[form_group.fields.nombreProporcionoDatos])}}</td>
+                                                    <td>{{form_row(form[form_group.fields.idDocProporcionoDatos])}}
+						       {% if form_errors(form[form_group.fields.idDocProporcionoDatos])|length > 0 %}
+							<div class="sonata-ba-form-error">
+							      {{form_errors(form[form_group.fields.idDocProporcionoDatos])}}
+							</div>
+						    {% endif %} 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_row(form[form_group.fields.numeroDocIdeProporDatos])}}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr class="dat_paciente_sec">
+                                                    <td colspan="4">G.Otros</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4">{{form_row(form[form_group.fields.observacion])}}</td>
+                                                </tr>
+                                                {%if procedencia is defined %}
+                                                    {%if procedencia != 'e' %}
+                                                        <tr class="dat_paciente_sec">
+                                                            <td colspan="4">H.Número de Expediente</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td colspan="4" >{{form_row(form[form_group.fields.expedientes])}}</td>
+                                                        </tr>
+                                                    {%endif%}
+                                                    <input type="hidden" id="procedencia" name="procedencia" value="{{ procedencia }}"/>
+                                                {%else%}
+                                                    <tr class="dat_paciente_sec">
+                                                        <td colspan="4">H.Número de Expediente</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="4" >{{form_row(form[form_group.fields.expedientes])}}</td>
+                                                    </tr>
+                                                    <input type="hidden" id="procedencia" name="procedencia" value="c"/>
+                                                {%endif%}
+                                            </table>
+                                        </center>
+                                    </div>
+                                </div>
+                                {#</div>#}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endblock %}
+
+                {% block sonata_post_fieldsets %}
+                </div>
+            {% endblock %}
+
+            {{ form_rest(form) }}
+
+            {% block formactions %}
+                <div class="well well-small form-actions">
+                    {% if app.request.isxmlhttprequest %}
+                        {% if admin.id(object) is not null %}
+                            <button type="submit" class="btn btn-success" name="btn_update"><i class="fa fa-save"></i> {{ 'btn_update'|trans({}, 'SonataAdminBundle') }}</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-success" name="btn_create"><i class="fa fa-plus-circle"></i> {{ 'btn_create'|trans({}, 'SonataAdminBundle') }}</button>
+                        {% endif %}
+                    {% else %}
+                        {% if admin.supportsPreviewMode %}
+                            <button class="btn btn-info persist-preview" name="btn_preview" type="submit">
+                                <i class="fa fa-eye"></i>
+                                {{ 'btn_preview'|trans({}, 'SonataAdminBundle') }}
+                            </button>
+                        {% endif %}
+                        {% if admin.id(object) is not null %}
+                            <button type="submit" class="btn btn-success" name="btn_update_and_edit"><i class="fa fa-save"></i> {{ 'btn_update_and_edit_again'|trans({}, 'SonataAdminBundle') }}</button>
+
+                           
+                            {% if admin.isAclEnabled() and admin.hasroute('acl') and admin.isGranted('MASTER', object) %}
+                                <a class="btn btn-info" href="{{ admin.generateObjectUrl('acl', object) }}"><i class="fa fa-users"></i> {{ 'link_edit_acl'|trans({}, 'SonataAdminBundle') }}</a>
+                            {% endif %}
+                        {% else %}
+                            {% if admin.hasroute('list') %}
+                                <button type="submit" class="btn btn-success" name="btn_create_and_list"><i class="fa fa-save"></i> Guardar</button>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% endblock formactions %}
+        </form>
+    {% endif %}
+{% endblock %}

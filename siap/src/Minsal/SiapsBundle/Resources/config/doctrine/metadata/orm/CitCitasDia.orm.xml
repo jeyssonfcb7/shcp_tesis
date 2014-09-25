@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="CitCitasDia" table="cit_citas_dia">
+    <indexes>
+      <index name="fki_fos_user_user_reg_cit_citas_diaa" columns="idusuarioreg"/>
+      <index name="fki_mnt_empleado_cit_citas_dia" columns="id_empleado"/>
+      <index name="fki_mnt_expediente_cit_citas_dia" columns="id_expediente"/>
+      <index name="IDX_92DF133E6A540E" columns="id_estado"/>
+      <index name="IDX_92DF133E3FCE8D8B" columns="id_motivo"/>
+      <index name="IDX_92DF133ECFE0D83" columns="id_tipocita"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="idAtenAreaModEstab" type="integer" column="id_aten_area_mod_estab" nullable="true"/>
+    <field name="fecha" type="date" column="fecha" nullable="true"/>
+    <field name="idusuarioreg" type="integer" column="idusuarioreg" nullable="true"/>
+    <field name="fechahorareg" type="datetime" column="fechahorareg" nullable="true"/>
+    <field name="ipcita" type="string" column="ipcita" length="15" nullable="true"/>
+    <field name="ipconfirmado" type="string" column="ipconfirmado" length="15" nullable="true"/>
+    <field name="idEmpleado" type="integer" column="id_empleado" nullable="true"/>
+    <field name="idExpediente" type="integer" column="id_expediente" nullable="true"/>
+    <field name="idEstablecimiento" type="integer" column="id_establecimiento" nullable="true"/>
+    <field name="idEstablecimientoReferencia" type="integer" column="id_establecimiento_referencia" nullable="true"/>
+    <many-to-one field="idTipocita" target-entity="CitTipocita">
+      <join-columns>
+        <join-column name="id_tipocita" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idMotivo" target-entity="CitMotivoagregados">
+      <join-columns>
+        <join-column name="id_motivo" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idEstado" target-entity="CitEstadoCita">
+      <join-columns>
+        <join-column name="id_estado" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

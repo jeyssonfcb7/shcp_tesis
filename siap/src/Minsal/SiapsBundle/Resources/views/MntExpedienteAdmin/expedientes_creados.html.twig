@@ -1,0 +1,26 @@
+{%block stylesheets %}
+    <link href="{{asset('bundles/minsalsiaps/js/jquery.jqGrid-4.5.2/css/ui.jqgrid.css')}}" rel="stylesheet"  type="text/css" media="all"/>
+    <link href="{{asset('bundles/minsalsiaps/css/jqGrid.css')}}" rel="stylesheet"  type="text/css" media="all"/>
+    <link rel="stylesheet" href="{{ asset('bundles/minsalsiaps/css/MntExpediente/list.css') }}" type="text/css" media="all" />  
+{%endblock%}
+{%block javascripts %}
+<script type="text/javascript" src="{{asset('bundles/minsalsiaps/js/jquery.jqGrid-4.5.2/js/i18n/grid.locale-es.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/minsalsiaps/js/jquery.jqGrid-4.5.2/js/jquery.jqGrid.min.js')}}" ></script>
+<script src="{{ asset('bundles/minsalsiaps/js/MntExpedienteAdmin/jqGridExpedientesCreados.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/minsalsiaps/js/MntExpedienteAdmin/list.js') }}" type="text/javascript"></script>
+{%endblock%}
+<h4>Lista de Expedientes Creados</h4>
+<h5>Desde: {{fecha_inicio}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hasta: {{fecha_fin}}</h5>
+<br>
+<div id="enlaces">
+    <form id='reporteExpedientesForm' >
+        <label>Exportar a:
+            <a id="exportar_hoja_calculo" class="img_export_inf" href=""><img src={{ asset('bundles/minsalsiaps/imagenes/calc_icon.png') }} /></a>
+            <a id="exportar_pdf" class="img_export_inf" href=""><img src={{ asset('bundles/minsalsiaps/imagenes/pdf_icon.png') }} /></a>
+        </label>
+    </form>
+</div>
+<div id='grid_expedientes'>
+    <table id="tableExpedientesCreados"></table>
+    <div id="pagerExpedientesCreados"></div>
+</div><BR><br>

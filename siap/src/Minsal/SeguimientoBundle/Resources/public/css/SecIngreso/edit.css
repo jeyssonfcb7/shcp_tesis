@@ -1,0 +1,82 @@
+/**********  Para tablas ******************/
+.dat_ingreso{
+    text-align: left;
+    border: 2px solid #E3E3E3;
+    position: relative;
+    width: 90%;
+    background-color: #D0E6FF;
+    color:black;
+}
+
+table.dat_ingreso td + td {
+    border-right: 2px solid #E3E3E3;    
+}
+
+.dat_ingreso_sec td {
+    padding-left: 15px;
+    color:white;
+    background-color:  #022C5C
+}
+
+.dat_ingreso label{
+    padding-left: 1em;
+    text-align: left;  
+    display: inline;
+    margin-bottom: 0;
+    width: 190px;
+    float: left;
+    padding-top:7px;
+}
+
+input[id$="_fecha"],input[id$="_fechaProbableParto"] {
+    width : 90px;
+    margin-left:0;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.dat_ingreso input{
+    width: 50%;
+}
+
+.sonata-bc .row-fluid .span5 {
+    width: 80%;
+}
+
+.sonata-bc .dat_ingreso .control-group, .sonata-bc .dat_ingreso .control-group label{
+    margin-bottom: 0;
+}
+
+.sonata-bc .form-horizontal .dat_ingreso .controls {
+    padding-bottom: 2px;
+    padding-top: 2px;
+}
+
+.sonata-bc .form-horizontal .dat_ingreso .control-label {
+    text-align: left;
+    padding-left: 1em;
+}
+
+.dat_ingreso_sec{
+    background-color: #B0C4DE;
+    font-weight: bold;
+    height: 2.3em;
+}
+
+.dat_ingreso_content{
+    vertical-align: middle;
+    padding-bottom: 0.3em;
+}
+
+#form_ingreso .ui-datepicker-trigger{ 
+    display: inline; 
+}
+
+select[id$="_hour"], select[id$="_minute"]{
+    width : 70px;
+}
+
+.sonata-ba-field.sonata-ba-field-standard-natural {
+    margin-left: 210px;
+    width: 50%;
+}

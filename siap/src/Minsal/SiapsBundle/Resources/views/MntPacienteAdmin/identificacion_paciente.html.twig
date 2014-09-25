@@ -1,0 +1,52 @@
+{%block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/minsalsiaps/css/MntPacienteAdmin/view.css') }}" type="text/css" media="all" />  
+{%endblock%}
+<table class="vista_paciente" border="0" width="80%" align='center'>
+    <tr class="titulo_vista">
+        <td colspan="4">Identificación del Paciente</td>
+    </tr>
+    <tr class="dat_paciente_content">               
+        <td width='25%'><label>Número Expediente:</label></td>
+         <td width='25%' style="font-size: 14pt;">
+       {% if datos.getExpedientes()|length >0 %}
+                {% for expediente in datos.expedientes %}
+                    <b>{{expediente.numero}}</b>
+                {%endfor%}
+        {%else%}
+                    <b>EM</b>
+        {%endif%}
+         </td>
+        <td colspan="2"><label>Nombre:</label> 
+            {{datos.primerApellido}} {{datos.segundoApellido}} {{datos.apellidoCasada}}, {{datos.primerNombre}} {{datos.segundoNombre}} {{datos.tercerNombre}}   
+        </td>
+    </tr>
+    <tr class="dat_paciente_content">
+        <td><label>Edad:</label></td><td>{{edad}}</td>
+        <td><label>Sexo:</label></td><td>{{datos.idSexo}}</td>
+    </tr>
+    <tr class="dat_paciente_content">
+        <td><label>Fecha Nacimiento:</label></td><td>{{datos.fechaNacimiento|date("d/m/Y")}} </td>
+        <td><label>Lugar Nacimiento:</label></td><td>{{datos.idDepartamentoNacimiento}}, {{datos.idMunicipioNacimiento}}</td>
+    </tr>
+    <tr class="dat_paciente_content">
+        <td><label>Dirección:</label></td><td colspan="3">{{datos.direccion}} </td>
+    </tr>
+    <tr class="dat_paciente_content">
+        <td><label>Nombre Padre:</label></td><td>{{datos.nombrePadre}}</td>
+        <td><label>Nombre Madre:</label></td><td>{{datos.nombreMadre}}</td>
+    </tr>
+    <tr class="dat_paciente_content">
+        <td><label>Nombre Responsable:</label></td><td>{{datos.nombreResponsable}}</td>
+        <td><label>Dirección Responsable:</label></td><td>{{datos.direccionResponsable}}</td>
+    </tr>
+    <tr class="dat_paciente_content">
+        <td><label>Fecha Elaboración:</label></td><td>{%if datos.fechaMod %} {{datos.fechaRegistro|date("d/m/Y H:i")}}{% endif %}</td>
+        <td><label>Elaboró :</label></td><td>{{datos.idUser}}</td>
+    </tr>
+    <tr class="dat_paciente_content">
+        <td><label>Fecha Modificación:</label></td><td>{%if datos.fechaMod %} {{datos.fechaMod|date("d/m/Y H:i")}}{% endif %}</td>
+        <td><label>Modificó:</label></td><td>{{datos.idUserMod}}</td>
+    </tr>
+
+</table>
+<br/>

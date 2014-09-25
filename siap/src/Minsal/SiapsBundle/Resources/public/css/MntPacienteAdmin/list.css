@@ -1,0 +1,58 @@
+/*Para campos de busqueda*/
+.sonata-bc .nombres {width:135px;}
+
+
+.table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
+    border: 2px solid #E5EDF5;
+}
+
+.sonata-bc .table th, .sonata-bc .table td {
+    border-top: 2px solid #E5EDF5 !important;
+}
+
+.sonata-bc .fecha {width:95px;}
+.sonata-bc .nombresLargos {width:300px;}
+/*div #resultadoBusqueda{padding-bottom: 25px;}*/
+.sonata-bc .table th, .sonata-bc .table td{
+    padding:0px; 
+    height:15px;
+    text-align:left; 
+    line-height: 20px;
+    vertical-align: middle;
+    border-top:1px solid #dddddd;
+    height: 1.3em;}
+
+.table-bordered input:hover {background-color: #F0F8FF;}
+
+.sonata-bc input[type="text"]{
+    margin: 4px;
+    vertical-align: middle;
+}
+/*para que desplegue la imagen del calendario en linea con el input */
+.sonata-bc img {
+    display: inline;
+    
+}
+#resultadoBusqueda{
+    overflow: auto;
+}
+
+.no-bottom-border {
+    border: 1px solid #FFFFFF !important;
+}
+
+.fecha.form-control {
+    display: inherit;
+}
+
+.icono {
+    height: 64px;
+}
+
+.btn {
+    color: #FFFFFF !important;
+}
+
+.ui-jqgrid .ui-pg-input {
+    height: 20px !important;
+}

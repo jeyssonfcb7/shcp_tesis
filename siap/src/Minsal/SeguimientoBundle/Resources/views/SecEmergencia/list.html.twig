@@ -1,0 +1,66 @@
+{% extends 'SonataAdminBundle::layout.html.twig' %}
+{%block stylesheets %}
+    {{parent()}}
+    <link rel="stylesheet" href="{{ asset('bundles/minsalseguimiento/css/SecIngreso/list.css') }}" type="text/css" media="all" />  
+{%endblock%}
+
+{%block javascripts %}
+    {{parent()}}
+    <script src="{{ asset('bundles/minsalsiaps/js/datepicker/jquery.ui.datepicker-es.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/minsalsiaps/js/maskedinput/jquery.maskedinput.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/minsalseguimiento/js/SecEmergencia/list.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/minsalsiaps/js/funciones_generales.js') }}" type="text/javascript"></script>
+{%endblock%}
+
+{% block sonata_admin_content -%}
+    <h4><img class="icono" src={{ asset('bundles/minsalsiaps/imagenes/buscar-paciente.png') }} />Consulta de  Emergencia</h4>
+    <br/>
+    <form id="buscarForm" method="post" >
+        <table class="table table-bordered ">
+            <tbody>
+                <tr>
+                    <td class="sonata-ba-list-field-header "><strong>Número de Expediente</strong></td>
+                    <td><input id="nec" name="nec" type="text" class="nombres form-control"  maxlength="10" /></td>
+                </tr>
+                <tr>
+                    <td class="sonata-ba-list-field-header "><strong>Primer Apellido:*</strong></td>
+                    <td><input id="primer_apellido" name="primer_apellido" class="nombres form-control" type="text"  maxlength="25"/></td>
+                    <td class="sonata-ba-list-field-header "><strong>Segundo Apellido:</td>
+                    <td><input id="segundo_apellido" name="segundo_apellido" class="nombres form-control" type="text"  maxlength="25"/></td>
+                    <td class="sonata-ba-list-field-header "><strong>Apellido Casada:</td>
+                    <td><input id="apellido_casada" name="apellido_casada" class="nombres form-control" type="text"  maxlength="25"/></td>
+
+                </tr>
+                <tr>
+                    <td class="sonata-ba-list-field-header "><strong>Primer Nombre: *</strong></td>
+                    <td><input id="primer_nombre" name="primer_nombre" type="text" class="nombres form-control"  maxlength="25"/></td>
+                    <td class="sonata-ba-list-field-header "><strong>Segundo Nombre:</strong></td>
+                    <td><input id="segundo_nombre" name="segundo_nombre" type="text" class="nombres form-control"  maxlength="25"/></td>
+                    <td class="sonata-ba-list-field-header "><strong>Tercer Nombre:</strong></td>
+                    <td><input id="tercer_nombre" name="tercer_nombre" type="text" class="nombres form-control"  maxlength="25"/></td>
+                </tr>
+                <tr>
+                    <td class="sonata-ba-list-field-header "><strong>Fecha Nacimiento:</strong></td>
+                    <td><input id="fecha_nacimiento" name="fecha_nacimiento" type="text" class="fecha form-control" /></td>
+                </tr>
+                <tr>
+                    <td colspan="6" class="no-bottom-border">
+                        <div class="pull-right">
+                            <a id="buscar" class="btn btn-primary" href="">
+                                <span class="glyphicon glyphicon-search"></span>
+                                Buscar
+                            </a>
+                            <a id="limpiar" class="btn btn-info" href="">
+                                <span class="glyphicon glyphicon-trash"></span>
+                                Limpiar
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <h4 id="lresultado">Lista de Emergencias</h4>
+    <div id="resultadoBusqueda"></div>
+{% endblock -%}
+

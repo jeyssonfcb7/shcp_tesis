@@ -1,0 +1,65 @@
+{% extends 'MinsalSiapsBundle:CRUD:base_list.html.twig' %}
+{%block stylesheets %}
+    {{parent()}}
+<link rel="stylesheet" href="{{ asset('bundles/minsalsiaps/css/MntAtenAreaModEstabAdmin/list.css') }}" type="text/css" media="all" />  
+{%endblock%}
+
+{%block javascripts %}
+    {{parent()}}
+<script src="{{ asset('bundles/minsalsiaps/js/AtenAreaModEstab/list.js') }}" type="text/javascript"></script>
+{%endblock%}
+
+{% block sonata_admin_content -%}
+<p>A continuación se presentan todos los servicios que el establecimiento <strong>{{establecimiento}}</strong> posee configurado para trabajar con el SIAPS
+</p>
+<form id='reporteForm' >
+    <a class="btn" href="" id='reporte' > Reporte</a>
+</form>
+<div class="justificado">
+    <table>
+        {%if programas|length != 0 %}
+        <tr class="modalidad">            
+            <td colspan=2><strong>Programas</strong></td>
+        </tr>
+             {% for programa in programas %}
+        <tr class="atencion">
+            <td width="150px"></td>
+            <td >{{programa.idPrograma}}</td>
+        </tr>
+             {% endfor %}
+        <tr>
+            <td colspan=2><br/></td>
+        </tr>
+        {% endif%}
+    {%  set espe=0 %} 
+    {%  set otra=0 %} 
+    {% for car in cartera %}
+       {% if car.tipo!=3 %}
+            {% if car.tipo==1 and espe==0 %}
+            {%  set espe=1 %} 
+        <tr class="tipos">
+            <td colspan=2>Especialidades Médica</td>
+        </tr>
+            {% elseif car.tipo==2 and otra==0%}
+            {%  set otra=2 %} 
+        <tr class="tipos">
+            <td colspan=2>Otras Atenciones</td>
+        </tr>
+            {% endif %}
+            {% else %}
+                {%  set espe=0 %} 
+                {%  set otra=0 %} 
+        <tr>
+            <td colspan=2><br/></td>
+        </tr>
+       {% endif %}
+        <tr class="{{car.estilo}}">
+            <td width="150px"><strong>{{car.label}}</strong></td>
+            <td>{{car.nombre}}</td>
+        </tr>
+
+    {% endfor %}
+    </table>
+</div>
+    <br/><br/><br/>
+{% endblock -%}

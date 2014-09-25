@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="MntAmbienteAreaEstablecimiento" table="mnt_ambiente_area_establecimiento">
+    <indexes>
+      <index name="fki_servicio_externo_establecimiento_ambiente" columns="id_servicio_externo_establecimiento"/>
+      <index name="IDX_90D3D5118627A85B" columns="id_aten_area_mod_estab"/>
+      <index name="IDX_90D3D5117DFA12F6" columns="id_establecimiento"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="fk_id_id_establecimiendo" columns="id_establecimiento,id_aten_area_mod_estab"/>
+    </unique-constraints>
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombre" type="string" column="nombre" length="80" nullable="false"/>
+    <many-to-one field="idServicioExternoEstablecimiento" target-entity="MntServicioExternoEstablecimiento">
+      <join-columns>
+        <join-column name="id_servicio_externo_establecimiento" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idEstablecimiento" target-entity="CtlEstablecimiento">
+      <join-columns>
+        <join-column name="id_establecimiento" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idAtenAreaModEstab" target-entity="MntAtenAreaModEstab">
+      <join-columns>
+        <join-column name="id_aten_area_mod_estab" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

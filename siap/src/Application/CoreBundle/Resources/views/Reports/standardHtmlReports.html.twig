@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{% block title %}Titulo de ventana{% endblock %}</title>
+    
+    {% block stylesheet %}
+        <link rel="stylesheet" href="{{ asset('bundles/minsalcitas/css/css3-buttons.css') }}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{{ asset('bundles/minsalsiaps/css/bootstrap3/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/minsalsiaps/css/bootstrap3/css/bootstrap-theme.min.css') }}">
+    
+        <style media="all" type="text/css">
+            iframe { width: 100%; height: 200px; border: 0;}
+            div#footer-page { padding: 15px 7px 7px 7px;width: 100%; border-top: 1px solid #c4c4c4;}
+            .glyphicon.white {color:white;}
+            .glyphicon.black {color:black;}
+        </style>
+    {% endblock %}
+    
+    {% block javascript %}
+        <script src="{{ asset('bundles/sonatajquery/jquery-1.10.2.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('bundles/sonatajquery/jquery-ui-1.10.4.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('bundles/sonatajquery/jquery-ui-i18n.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('bundles/minsalsiaps/css/bootstrap3/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    {% endblock %}
+</head>
+<body>
+    {% block iframe %}
+        <center>
+            <iframe id="content-iframe"></iframe>
+        </center>
+    {% endblock %}
+    {% block content%}
+        <div id="footer-page">
+            <center>
+                <a href="javascript:window.frames['content-iframe'].print();"><button class="action blue"><span class="glyphicon glyphicon-print white"></span><span class="label">Imprimir</span></button></a>
+                <a href="javascript:window.close();"><button class="action"><span class="glyphicon glyphicon-remove-circle black"></span><span class="label">Cerrar ventana</span></button></a>
+            </center>
+        </div>
+    {% endblock %}
+</body>
+</html>

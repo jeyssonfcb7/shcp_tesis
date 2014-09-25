@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carteraServicios_AreaAtencion_Padres" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c6442e81-f0ff-43e2-a8eb-3268450db663">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Heading 2" fontSize="14" isBold="true" isItalic="true"/>
+	<parameter name="AtenAreaModEstab" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["repo:/reports/siaps/cartera/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT C.nombre, C.id idatencionPadre,D.nombre tipo_atencion
+FROM 
+  mnt_aten_area_mod_estab A, 
+  mnt_area_mod_estab B,
+  ctl_atencion C,
+  ctl_tipo_atencion D  
+WHERE 
+  A.id_area_mod_estab = B.id AND C.id = A.id_atencion AND D.id=C.id_tipo_atencion AND
+  C.id_atencion_padre IS NULL AND B.id=$P{AtenAreaModEstab}
+ORDER BY D.nombre]]>
+	</queryString>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="idatencionpadre" class="java.lang.Integer"/>
+	<field name="tipo_atencion" class="java.lang.String"/>
+	<group name="tipo_atencion">
+		<groupExpression><![CDATA[$F{tipo_atencion}]]></groupExpression>
+		<groupHeader>
+			<band height="25">
+				<textField>
+					<reportElement uuid="77513b9d-0139-417a-9927-686ace2097b4" style="Heading 2" mode="Transparent" x="0" y="0" width="523" height="20" backcolor="#9999FF"/>
+					<textElement verticalAlignment="Middle">
+						<font size="11" isItalic="true"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tipo_atencion}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="795f37bf-6142-477f-be68-15c910cc4abf" x="3" y="20" width="200" height="1"/>
+					<graphicElement>
+						<pen lineWidth="1.75"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="38" splitType="Stretch">
+			<textField>
+				<reportElement uuid="27dc4bd5-b019-49f0-9e56-d0289fac711a" x="0" y="0" width="572" height="20"/>
+				<textElement>
+					<font isItalic="true"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="0e16c656-0927-4f2c-bd5b-aa988398360b" stretchType="RelativeToBandHeight" x="33" y="20" width="79" height="13" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="idPadre">
+					<subreportParameterExpression><![CDATA[$F{idatencionpadre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "carteraServicios_AreaAtencion_Padres_Hijos"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

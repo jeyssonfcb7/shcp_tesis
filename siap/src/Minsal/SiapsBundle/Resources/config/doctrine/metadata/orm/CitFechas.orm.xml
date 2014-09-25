@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="CitFechas" table="cit_fechas">
+    <indexes>
+      <index name="fki_cit_citasxdia" columns="id_cita"/>
+      <index name="fki_cit_tipocita_cit_fechas" columns="tipo_cita"/>
+      <index name="fki_fos_user_user_reg_cit_fechas" columns="idusuarioreg"/>
+      <index name="fki_mnt_empleados_cit_fechas" columns="id_empleado"/>
+      <index name="fki_mnt_rangohoras_cit_fechas" columns="id_rangohora"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="fecha" type="date" column="fecha" nullable="true"/>
+    <field name="ag" type="integer" column="ag" nullable="true"/>
+    <field name="fechahorareg" type="datetime" column="fechahorareg" nullable="true"/>
+    <field name="idRangohora" type="integer" column="id_rangohora" nullable="false"/>
+    <field name="idAreaModEstab" type="integer" column="id_area_mod_estab" nullable="true"/>
+    <field name="idEmpleado" type="integer" column="id_empleado" nullable="true"/>
+    <field name="idusuarioreg" type="integer" column="idusuarioreg" nullable="true"/>
+    <many-to-one field="tipoCita" target-entity="CitTipocita">
+      <join-columns>
+        <join-column name="tipo_cita" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idCita" target-entity="CitCitasDia">
+      <join-columns>
+        <join-column name="id_cita" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

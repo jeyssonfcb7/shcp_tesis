@@ -1,0 +1,23 @@
+.titulo_vista{
+    background-color: #B0C4DE;
+    font-weight: bold;
+    height: 2.3em;
+    font-size: 12pt;
+    text-align: center;
+}
+.dat_paciente_content{
+    vertical-align: middle;
+    padding-bottom: 0.3em;
+}
+.vista_paciente{
+    text-align: left;
+}
+.vista_paciente label{
+    display: inline-block;
+    margin-left: .3em;
+    font-weight: bold;
+    text-align: left;
+}
+.vista_paciente td{
+    border: 2px solid #E3E3E3;
+}

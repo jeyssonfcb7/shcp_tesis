@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="MntConexion" table="mnt_conexion">
+    <indexes>
+      <index name="IDX_7C97F35A7DFA12F6" columns="id_establecimiento"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombre" type="string" column="nombre" length="50" nullable="false"/>
+    <field name="host" type="string" column="host" length="20" nullable="false"/>
+    <field name="usuario" type="string" column="usuario" length="15" nullable="false"/>
+    <field name="contrasenia" type="string" column="contrasenia" length="150" nullable="false"/>
+    <field name="puerto" type="integer" column="puerto" nullable="false"/>
+    <field name="baseDeDatos" type="string" column="base_de_datos" length="20" nullable="false"/>
+    <field name="gestorBase" type="string" column="gestor_base" length="10" nullable="false"/>
+    <many-to-one field="idEstablecimiento" target-entity="CtlEstablecimiento">
+      <join-columns>
+        <join-column name="id_establecimiento" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

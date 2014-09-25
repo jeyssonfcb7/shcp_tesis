@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="CitProgramacionExams" table="cit_programacion_exams">
+    <indexes>
+      <index name="fki_fos_user_user_cit_programacion_exams" columns="idusuarioreg"/>
+      <index name="fki_lab_examen_establecimiento_cit_programacion_examen" columns="id_examen_establecimiento"/>
+      <index name="fki_mnt_aten_area_mod_estab_cit_programacion_exams" columns="id_aten_area_mod_estab"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="rangotiempoprev" type="integer" column="rangotiempoprev" nullable="true"/>
+    <field name="idAtenAreaModEstab" type="integer" column="id_aten_area_mod_estab" nullable="true"/>
+    <field name="idEstablecimiento" type="integer" column="id_establecimiento" nullable="true"/>
+    <field name="idusuarioreg" type="integer" column="idusuarioreg" nullable="true"/>
+    <field name="fechahorareg" type="datetime" column="fechahorareg" nullable="true"/>
+    <field name="idExamenEstablecimiento" type="integer" column="id_examen_establecimiento" nullable="true"/>
+  </entity>
+</doctrine-mapping>

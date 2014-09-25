@@ -1,0 +1,36 @@
+
+.justificado{
+    text-align: left;
+    margin-left: 20%;
+}
+
+.justificado .modalidad{
+    font-size: 15px;
+   /* color:black;*/
+    background-color: #a9c56a;
+}
+
+.justificado .areaAtencion{
+    /*color:black;*/
+    font-size: 13px;
+    background-color: #B6CFFC;
+}
+
+.justificado .atencion{
+    font-size: 13px;
+   /* color:black;*/
+}
+
+.justificado .atencionHijo{
+    text-indent: 1.5em;
+    font-size: 13px;
+    /*color:black;*/
+    font-style: italic;
+}
+
+.justificado .tipos{
+    background-color: lightgray;
+    font-weight: bold;
+    font-size: 13px;
+   /* color: black;*/
+}

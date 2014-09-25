@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="MntEmpleado" table="mnt_empleado">
+    <indexes>
+      <index name="fki_area_laboratorio_empleado" columns="id_area_laboratorio"/>
+      <index name="IDX_2138DDC96325E299" columns="id_departamento"/>
+      <index name="IDX_2138DDC97DFA12F6" columns="id_establecimiento"/>
+      <index name="IDX_2138DDC97EAD49C7" columns="id_municipio"/>
+      <index name="IDX_2138DDC9F57D32FD" columns="id_pais"/>
+      <index name="IDX_2138DDC9B13434FE" columns="id_tipo_empleado"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombre" type="string" column="nombre" length="100" nullable="false"/>
+    <field name="apellido" type="string" column="apellido" length="100" nullable="false"/>
+    <field name="fechaNacimiento" type="date" column="fecha_nacimiento" nullable="true"/>
+    <field name="nit" type="string" column="nit" length="17" nullable="true"/>
+    <field name="dui" type="string" column="dui" length="12" nullable="true"/>
+    <field name="nup" type="string" column="nup" length="15" nullable="true"/>
+    <field name="inpep" type="string" column="inpep" length="15" nullable="true"/>
+    <field name="ipsfa" type="string" column="ipsfa" length="10" nullable="true"/>
+    <field name="isss" type="string" column="isss" length="10" nullable="true"/>
+    <field name="numeroMarcacion" type="string" column="numero_marcacion" length="5" nullable="true"/>
+    <field name="pasaporte" type="string" column="pasaporte" length="15" nullable="true"/>
+    <field name="licenciaConducir" type="string" column="licencia_conducir" length="20" nullable="true"/>
+    <field name="numeroJuntaVigilancia" type="string" column="numero_junta_vigilancia" length="20" nullable="true"/>
+    <field name="numeroTelefono" type="string" column="numero_telefono" length="10" nullable="true"/>
+    <field name="numeroCelular" type="string" column="numero_celular" length="10" nullable="true"/>
+    <field name="correoElectronico" type="string" column="correo_electronico" length="50" nullable="true"/>
+    <field name="contactoEmergencia" type="string" column="contacto_emergencia" length="100" nullable="true"/>
+    <field name="telefonoEmergencia" type="string" column="telefono_emergencia" length="10" nullable="true"/>
+    <field name="seguroDeVida" type="boolean" column="seguro_de_vida" nullable="false"/>
+    <field name="tieneDiscapacidad" type="boolean" column="tiene_discapacidad" nullable="true"/>
+    <field name="fechaIngresoPublico" type="date" column="fecha_ingreso_publico" nullable="true"/>
+    <field name="fechaIngresoMinsal" type="date" column="fecha_ingreso_minsal" nullable="true"/>
+    <field name="correlativo" type="smallint" column="correlativo" nullable="true"/>
+    <field name="idCargoEmpleado" type="integer" column="id_cargo_empleado" nullable="true"/>
+    <field name="codigoFarmacia" type="string" column="codigo_farmacia" length="6" nullable="true"/>
+    <field name="habilitadoFarmacia" type="string" column="habilitado_farmacia" nullable="true"/>
+    <field name="firmaDigital" type="text" column="firma_digital" nullable="true"/>
+    <many-to-one field="idPais" target-entity="CtlPais">
+      <join-columns>
+        <join-column name="id_pais" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idTipoEmpleado" target-entity="MntTipoEmpleado">
+      <join-columns>
+        <join-column name="id_tipo_empleado" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idMunicipio" target-entity="CtlMunicipio">
+      <join-columns>
+        <join-column name="id_municipio" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idEstablecimiento" target-entity="CtlEstablecimiento">
+      <join-columns>
+        <join-column name="id_establecimiento" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idDepartamento" target-entity="CtlDepartamento">
+      <join-columns>
+        <join-column name="id_departamento" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idAreaLaboratorio" target-entity="LabAreaLaboratorio">
+      <join-columns>
+        <join-column name="id_area_laboratorio" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>
