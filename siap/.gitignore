@@ -1,0 +1,38 @@
+# Bootstrap
+app/bootstrap*
+
+# Composer phar
+composer.phar
+composer.lock
+ 
+# Symfony directories
+vendor/*
+*/logs/*
+*/cache/*
+web/uploads/*
+web/bundles/*
+ 
+# Archivos de configuración
+app/config/parameters.ini
+app/config/parameters.yml
+ 
+#Carpeta nbproject de netbeans
+nbproject/
+
+#Archivos de respaldo
+*~
+
+#Archivos de solución de conflictos
+*.orig
+
+#Archivo de configuración del JasperServerReport
+src/Minsal/Util/JasperReport/_jasperserverreports.php
+
+#Directorio que utiliza el JasperServerReport para abrir las imagenes
+web/imagenes/*
+
+#upload files
+upload/*
+
+#Vendors compresos
+*.tar.gz
